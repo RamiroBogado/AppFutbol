@@ -1,7 +1,9 @@
 	Grupo A
 
- - Ramiro Bogado
+ - Ramiro Bogado - RamiroBogado
 
  -
 
  -
+
+grupoA-usuarioGitHub-nombreFuncionalidad.  
