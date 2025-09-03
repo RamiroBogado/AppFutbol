@@ -2,7 +2,7 @@
 
  - Ramiro Bogado - RamiroBogado
 
- - Liniers Joaquin Ivan - Joacoliniers
+ - Liniers Joaquin Ivan - Joacoliniers (Registro nuevo usuario)
 
  -
 
