@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class RegistroActivity : AppCompatActivity() {
 
-    lateinit var btnRegistro: Button
+    lateinit var btnContinuar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +22,12 @@ class RegistroActivity : AppCompatActivity() {
             insets
         }
 
-        btnRegistro=findViewById<Button>(R.id.btnRegistro)
+        btnContinuar=findViewById<Button>(R.id.btnContinuar)
 
-            val intent = Intent(this, LoginAc)
+        btnContinuar.setOnClickListener {
+
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
