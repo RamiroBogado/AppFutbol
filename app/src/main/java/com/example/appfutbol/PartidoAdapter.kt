@@ -1,7 +1,6 @@
 package com.example.appfutbol
 
 import Partido
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class PartidoAdapter(
-    private val partidosList: MutableList<Partido>,
-    private val context: Context
+    private val partidosList: MutableList<Partido>
 ) : RecyclerView.Adapter<PartidoAdapter.PartidoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartidoViewHolder {

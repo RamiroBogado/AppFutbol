@@ -27,7 +27,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
         rvPartidos = findViewById(R.id.rvPartidos)
         btnVolver = findViewById(R.id.btnVolver)
 
-        partidosAdapter = PartidoAdapter(getPartidos(), this)
+        partidosAdapter = PartidoAdapter(getPartidos())
         rvPartidos.adapter = partidosAdapter
 
         // Configurar el botón volver
