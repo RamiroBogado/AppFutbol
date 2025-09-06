@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@android:color/white"
+
+    android:id="@+id/ligas"
+    tools:context=".LigasActivity">
+
+    <!-- Título principal -->
+    <TextView
+        android:id="@+id/tvFutbolParaTodos"
+        android:text="Futbol Para Todos"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Contenedor de botones cuadrados -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <!-- Primer botón cuadrado con logo -->
+        <LinearLayout
+            android:id="@+id/btnLogo1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="12dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/button_square_background"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivLogo1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="Foto logo"
+                android:src="@mipmap/pl" />
+        </LinearLayout>
+
+        <!-- Segundo botón cuadrado con logo -->
+        <LinearLayout
+            android:id="@+id/btnLogo2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="12dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/button_square_background"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivLogo2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="Foto logo"
+                android:src="@mipmap/ic_launcher" /> <!-- Reemplazar con imagen -->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Segunda fila de botones cuadrados -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <!-- Tercer botón cuadrado con logo -->
+        <LinearLayout
+            android:id="@+id/btnLogo3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="12dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/button_square_background"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivLogo3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="Foto logo"
+                android:src="@mipmap/ic_launcher" /> <!-- Reemplazar con imagen -->
+        </LinearLayout>
+
+        <!-- Cuarto botón cuadrado con logo -->
+        <LinearLayout
+            android:id="@+id/btnLogo4"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="12dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/button_square_background"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivLogo4"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="Foto logo"
+                android:src="@mipmap/ic_launcher" /> <!-- Reemplazar con imagen -->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botón de acción principal -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:text="Volver"
+        android:textSize="20sp"
+        android:backgroundTint="@android:color/black"
+        android:textColor="@android:color/white"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

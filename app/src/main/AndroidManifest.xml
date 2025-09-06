@@ -12,7 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFutbol">
         <activity
-            android:name=".MainActivity"
+            android:name=".DetallePartidoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PartidosRecientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LigasActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
