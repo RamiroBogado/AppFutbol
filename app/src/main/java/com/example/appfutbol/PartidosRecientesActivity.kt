@@ -1,61 +1,63 @@
 package com.example.appfutbol
 
-import Partido
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.Button
 
 class PartidosRecientesActivity : AppCompatActivity() {
-    lateinit var rvPartidos: RecyclerView
-    lateinit var partidosAdapter: PartidoAdapter
-    lateinit var btnVolver: Button
+
+    private lateinit var rvPartidos: RecyclerView
+    private lateinit var partidoAdapter: PartidoAdapter
+    private lateinit var btnVolver: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_listado_partidos)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.listado)) { v, insets ->
+        setContentView(R.layout.activity_partidos_recientes)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        setupRecyclerView()
+        setupButtonVolver()
+    }
+
+    private fun setupRecyclerView() {
         rvPartidos = findViewById(R.id.rvPartidos)
+        rvPartidos.layoutManager = LinearLayoutManager(this)
+
+        val partidos = getPartidosPremierLeague()
+        partidoAdapter = PartidoAdapter(partidos, this)
+        rvPartidos.adapter = partidoAdapter
+    }
+
+    private fun setupButtonVolver() {
         btnVolver = findViewById(R.id.btnVolver)
-
-        partidosAdapter = PartidoAdapter(getPartidos())
-        rvPartidos.adapter = partidosAdapter
-
-        // Configurar el botón volver
         btnVolver.setOnClickListener {
-            finish() // Cierra esta actividad y vuelve a la anterior
+            finish()
         }
     }
 
-    private fun getPartidos(): MutableList<Partido> {
-        val partidos: MutableList<Partido> = ArrayList()
-
-        partidos.add(Partido("2025/09/31", "15:00", "Aston Villa FC", "Crystal Palace FC", "0 - 3"));
-        partidos.add(Partido("2025/09/31", "12:30", "Liverpool FC", "Arsenal FC", "1 - 0"));
-        partidos.add(Partido("2025/09/31", "10:00", "Bigiston & Home A", "Manchester City F", "2 - 1"));
-        partidos.add(Partido("2025/09/31", "10:00", "Nottingham Forest", "West Ham United", "0 - 3"));
-        partidos.add(Partido("2025/09/30", "13:30", "Leeds United FC", "Newcastle United", "0 - 0"));
-        partidos.add(Partido("2025/09/30", "11:00", "Sunderland AFG", "Brentford FC", "2 - 1"));
-        partidos.add(Partido("2025/09/30", "11:00", "Wolverhampton W.", "Everton FC", "2 - 2"));
-        partidos.add(Partido("2025/09/30", "11:00", "Tottenham Hotspur", "AFG Boumenswill", "0 - 1"));
-        partidos.add(Partido("2025/09/30", "11:00", "Marciceider United", "Burnley FC", "3 - 2"));
-        partidos.add(Partido("2025/09/29", "16:00", "Chelsea FC", "Fulham FC", "2 - 0"));
-        partidos.add(Partido("2025/09/29", "14:00", "Brighton & Hove A.", "Southampton FC", "1 - 1"));
-        partidos.add(Partido("2025/09/29", "12:00", "Leicester City", "Watford FC", "3 - 1"));
-        partidos.add(Partido("2025/09/28", "15:30", "Manchester United", "Leeds United", "2 - 0"));
-        partidos.add(Partido("2025/09/28", "13:00", "Newcastle United", "Sheffield United", "1 - 0"));
-        partidos.add(Partido("2025/09/28", "10:30", "Norwich City", "Aston Villa", "0 - 2"));
-
-
-        return partidos
+    private fun getPartidosPremierLeague(): MutableList<Partido> {
+        return mutableListOf(
+            Partido(1, "2025/09/28", "15:00", "Manchester City", "Liverpool", "2 - 1"),
+            Partido(2, "2025/09/28", "12:30", "Arsenal", "Chelsea", "3 - 0"),
+            Partido(3, "2025/09/27", "15:00", "Manchester United", "Tottenham", "1 - 1"),
+            Partido(4, "2025/09/27", "12:30", "Newcastle", "Aston Villa", "2 - 3"),
+            Partido(5, "2025/09/26", "20:00", "Brighton", "West Ham", "4 - 2"),
+            Partido(6, "2025/09/26", "17:30", "Brentford", "Wolverhampton", "0 - 0"),
+            Partido(7, "2025/09/25", "19:45", "Crystal Palace", "Fulham", "1 - 0"),
+            Partido(8, "2025/09/25", "17:00", "Everton", "Nottingham Forest", "2 - 1"),
+            Partido(9, "2025/09/24", "20:00", "Burnley", "Sheffield United", "3 - 1"),
+            Partido(10, "2025/09/24", "18:00", "Bournemouth", "Luton Town", "2 - 2")
+        )
     }
 }

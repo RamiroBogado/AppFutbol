@@ -1,6 +1,7 @@
 package com.example.appfutbol
 
-import Partido
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class PartidoAdapter(
-    private val partidosList: MutableList<Partido>
+    private val partidosList: MutableList<Partido>,
+    private val context: Context
 ) : RecyclerView.Adapter<PartidoAdapter.PartidoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartidoViewHolder {
@@ -25,6 +27,19 @@ class PartidoAdapter(
         holder.tvEquipoLocal.text = partido.equipoLocal
         holder.tvEquipoVisitante.text = partido.equipoVisitante
         holder.tvResultado.text = partido.resultado
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, DetallePartidoActivity::class.java).apply {
+                // Pasar los datos individualmente en lugar del objeto completo
+                putExtra("id", partido.id)
+                putExtra("fecha", partido.fecha)
+                putExtra("hora", partido.hora)
+                putExtra("equipoLocal", partido.equipoLocal)
+                putExtra("equipoVisitante", partido.equipoVisitante)
+                putExtra("resultado", partido.resultado)
+            }
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = partidosList.size

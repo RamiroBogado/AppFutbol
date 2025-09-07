@@ -54,7 +54,7 @@
             android:text="Aston Villa FC"
             android:ellipsize="end"
             android:maxLines="1"
-            android:gravity="end"
+            android:gravity="center"
             android:paddingEnd="8dp"/>
 
         <!-- VS centrado -->
@@ -79,7 +79,7 @@
             android:text="Crystal Palace FC"
             android:ellipsize="end"
             android:maxLines="1"
-            android:gravity="start"
+            android:gravity="center"
             android:paddingStart="8dp"/>
     </LinearLayout>
 

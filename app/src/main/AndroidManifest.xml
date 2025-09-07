@@ -15,6 +15,9 @@
             android:name=".PartidosRecientesActivity"
             android:exported="false" />
         <activity
+            android:name=".DetallePartidoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListaActivity"
             android:exported="false" />
         <activity
