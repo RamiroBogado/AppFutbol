@@ -14,11 +14,13 @@ import android.widget.Toast
 import androidx.core.content.edit
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var etUsuario: EditText
-    private lateinit var etContra: EditText
-    private lateinit var cbRecordarUsuario: CheckBox
-    private lateinit var btnContinuar: Button
-    private lateinit var sharedPreferences: SharedPreferences
+    lateinit var etUsuario: EditText
+    lateinit var etContra: EditText
+    lateinit var cbRecordarUsuario: CheckBox
+    lateinit var btnContinuar: Button
+
+    lateinit var btnVolver: Button
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         etContra = findViewById(R.id.etContra)
         cbRecordarUsuario = findViewById(R.id.cbRecordarUsuario)
         btnContinuar = findViewById(R.id.btnContinuar)
+        btnVolver = findViewById(R.id.btnVolver)
     }
 
     private fun setupSharedPreferences() {
@@ -59,10 +62,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupButtonListener() {
+
         btnContinuar.setOnClickListener {
             if (validarCampos()) {
                 iniciarSesion()
             }
+        }
+
+        btnVolver.setOnClickListener {
+            finish()
         }
     }
 

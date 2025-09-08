@@ -31,20 +31,21 @@ class MainActivity : AppCompatActivity() {
 
         btnRegistrarme = findViewById(R.id.btnRegistro)
         btnIniciar = findViewById(R.id.btnIniciar)
+
     }
     private fun setupButtonListener() {
 
         btnRegistrarme.setOnClickListener {
             val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
 
         btnIniciar.setOnClickListener {
 
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
 
         }
     }

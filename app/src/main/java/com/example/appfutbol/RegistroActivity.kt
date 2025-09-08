@@ -12,11 +12,12 @@ import android.widget.Toast
 import androidx.core.content.edit
 
 class RegistroActivity : AppCompatActivity() {
+    lateinit var etUsuario: EditText
+    lateinit var etContra: EditText
+    lateinit var etRepetirContra: EditText
+    lateinit var btnContinuar: Button
 
-    private lateinit var etUsuario: EditText
-    private lateinit var etContra: EditText
-    private lateinit var etRepetirContra: EditText
-    private lateinit var btnContinuar: Button
+    lateinit var btnVolver: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class RegistroActivity : AppCompatActivity() {
         etContra = findViewById(R.id.etContra)
         etRepetirContra = findViewById(R.id.etRepetirContra)
         btnContinuar = findViewById(R.id.btnContinuar)
+        btnVolver = findViewById(R.id.btnVolver)
     }
 
     private fun setupButtonListener() {
@@ -45,6 +47,10 @@ class RegistroActivity : AppCompatActivity() {
             if (validarCampos()) {
                 registrarUsuario()
             }
+        }
+
+        btnVolver.setOnClickListener {
+            finish()
         }
     }
 
@@ -89,7 +95,7 @@ class RegistroActivity : AppCompatActivity() {
     private fun registrarUsuario() {
         val usuario = etUsuario.text.toString().trim()
 
-        // Mensaje de éxito corregido
+        // Mensaje de éxito
         Toast.makeText(this, "Usuario $usuario registrado exitosamente", Toast.LENGTH_SHORT).show()
 
         //lógica para guardar el usuario en SharedPreferences o base de datos

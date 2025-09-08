@@ -15,6 +15,7 @@ class LigasActivity : AppCompatActivity() {
     lateinit var btnLogo2: LinearLayout
     lateinit var btnLogo3: LinearLayout
     lateinit var btnLogo4: LinearLayout
+
     lateinit var btnVolver: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,29 +46,26 @@ class LigasActivity : AppCompatActivity() {
     private fun setupButtonListeners() {
 
         btnLogo1.setOnClickListener {
-            // Acción para el primer logo (Partidos Recientes)
+            // Acción para la primera liga (Premier League)
             val intent = Intent(this, ListaActivity::class.java)
             startActivity(intent)
         }
 
         btnLogo2.setOnClickListener {
-            // Acción para el segundo logo (Próximos Partidos)
-            // Cambia por la actividad correspondiente
-            // val intent = Intent(this, ProximosPartidosActivity::class.java)
+            // Acción para la segunda liga (BundesLiga)
+            // val intent = Intent(this, ListaActivity::class.java)
             // startActivity(intent)
         }
 
         btnLogo3.setOnClickListener {
-            // Acción para el tercer logo (Tabla de Posiciones)
-            // Cambia por la actividad correspondiente
-            // val intent = Intent(this, TablaActivity::class.java)
+            // Acción para la tercera liga (Serie A)
+            // val intent = Intent(this, ListaActivity::class.java)
             // startActivity(intent)
         }
 
         btnLogo4.setOnClickListener {
-            // Acción para el cuarto logo (Goleadores)
-            // Cambia por la actividad correspondiente
-            // val intent = Intent(this, GoleadoresActivity::class.java)
+            // Acción para la cuarta liga (La Liga)
+            // val intent = Intent(this, ListaActivity::class.java)
             // startActivity(intent)
         }
 
