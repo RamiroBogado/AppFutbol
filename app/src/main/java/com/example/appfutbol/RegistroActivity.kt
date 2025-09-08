@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
 
 class RegistroActivity : AppCompatActivity() {
 
@@ -103,9 +104,9 @@ class RegistroActivity : AppCompatActivity() {
     private fun guardarUsuario(usuario: String) {
         // Ejemplo de cómo guardar en SharedPreferences
         val sharedPreferences = getSharedPreferences("AppFutbolPrefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("usuario", usuario)
-        editor.putBoolean("logueado", true)
-        editor.apply()
+        sharedPreferences.edit {
+            putString("usuario", usuario)
+            putBoolean("logueado", true)
+        }
     }
 }

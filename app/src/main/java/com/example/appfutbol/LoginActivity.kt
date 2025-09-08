@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var etUsuario: EditText
@@ -114,15 +115,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun guardarPreferenciasUsuario(usuario: String, recordarUsuario: Boolean) {
-        val editor = sharedPreferences.edit()
+        sharedPreferences.edit {
 
-        if (recordarUsuario) {
-            editor.putString("usuario", usuario)
-        } else {
-            editor.remove("usuario")
+            if (recordarUsuario) {
+                putString("usuario", usuario)
+            } else {
+                remove("usuario")
+            }
+            putBoolean("recordar_usuario", recordarUsuario)
         }
-        editor.putBoolean("recordar_usuario", recordarUsuario)
-        editor.apply()
     }
 
 }
