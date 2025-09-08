@@ -11,17 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFutbol">
+
         <activity
-            android:name=".PartidosRecientesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DetallePartidoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ListaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LigasActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,10 +22,28 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".DetallePartidoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LigasActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ListaActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
         <activity android:name=".RegistroActivity"
-            android:exported="true"/>
-        <activity android:name=".LoginActivity"
-            android:exported="true"/>
+            android:exported="false"/>
+
+        <activity android:name=".PartidosRecientesActivity"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

@@ -10,6 +10,16 @@ import android.widget.LinearLayout
 import android.content.Intent
 
 class ListaActivity : AppCompatActivity() {
+
+    // Botones de opciones
+    lateinit var btnPartidosRecientes: LinearLayout
+    lateinit var btnProximosPartidos: LinearLayout
+    lateinit var btnTabla: LinearLayout
+    lateinit var btnGoleadores: LinearLayout
+    // Botón Volver
+    lateinit var btnVolver: Button
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,19 +30,22 @@ class ListaActivity : AppCompatActivity() {
             insets
         }
 
-        // Configurar los listeners de los botones
+        initViews()
         setupButtonListeners()
+
     }
+    private fun initViews() {
 
-    private fun setupButtonListeners() {
         // Botones de opciones
-        val btnPartidosRecientes: LinearLayout = findViewById(R.id.btnPartidosRecientes)
-        val btnProximosPartidos: LinearLayout = findViewById(R.id.btnProximosPartidos)
-        val btnTabla: LinearLayout = findViewById(R.id.btnTabla)
-        val btnGoleadores: LinearLayout = findViewById(R.id.btnGoleadores)
-
+        btnPartidosRecientes = findViewById(R.id.btnPartidosRecientes)
+        btnProximosPartidos= findViewById(R.id.btnProximosPartidos)
+        btnTabla= findViewById(R.id.btnTabla)
+        btnGoleadores= findViewById(R.id.btnGoleadores)
         // Botón Volver
-        val btnVolver: Button = findViewById(R.id.btnVolver)
+        btnVolver= findViewById(R.id.btnVolver)
+
+    }
+    private fun setupButtonListeners() {
 
         btnPartidosRecientes.setOnClickListener {
             // Navegar a Partidos Recientes

@@ -10,6 +10,13 @@ import android.widget.LinearLayout
 import android.content.Intent
 
 class LigasActivity : AppCompatActivity() {
+
+    lateinit var btnLogo1: LinearLayout
+    lateinit var btnLogo2: LinearLayout
+    lateinit var btnLogo3: LinearLayout
+    lateinit var btnLogo4: LinearLayout
+    lateinit var btnVolver: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,19 +28,21 @@ class LigasActivity : AppCompatActivity() {
             insets
         }
 
-        // Configurar los listeners de los botones
+        initViews()
         setupButtonListeners()
     }
 
-    private fun setupButtonListeners() {
-        // Botones de logos
-        val btnLogo1: LinearLayout = findViewById(R.id.btnLogo1)
-        val btnLogo2: LinearLayout = findViewById(R.id.btnLogo2)
-        val btnLogo3: LinearLayout = findViewById(R.id.btnLogo3)
-        val btnLogo4: LinearLayout = findViewById(R.id.btnLogo4)
+    private fun initViews() {
 
-        // Botón Volver
-        val btnVolver: Button = findViewById(R.id.btnVolver)
+        btnLogo1 = findViewById(R.id.btnLogo1)
+        btnLogo2 = findViewById(R.id.btnLogo2)
+        btnLogo3 = findViewById(R.id.btnLogo3)
+        btnLogo4 = findViewById(R.id.btnLogo4)
+
+        btnVolver = findViewById(R.id.btnVolver)
+
+    }
+    private fun setupButtonListeners() {
 
         btnLogo1.setOnClickListener {
             // Acción para el primer logo (Partidos Recientes)

@@ -9,9 +9,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var btnRegistrarme: Button
     lateinit var btnIniciar: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,17 +22,32 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        btnRegistrarme=findViewById<Button>(R.id.btnRegistro)
-        btnIniciar=findViewById<Button>(R.id.btnIniciar)
+        initViews()
+        setupButtonListener()
+
+    }
+
+    private fun initViews() {
+
+        btnRegistrarme = findViewById(R.id.btnRegistro)
+        btnIniciar = findViewById(R.id.btnIniciar)
+    }
+    private fun setupButtonListener() {
 
         btnRegistrarme.setOnClickListener {
-
-            //TODO: INTENT A REGISTRO
+            val intent = Intent(this, RegistroActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
-        btnRegistrarme.setOnClickListener {
+        btnIniciar.setOnClickListener {
 
-            //TODO: INTENT A LOGIN
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+
         }
     }
 }
+
+

@@ -63,6 +63,12 @@
         android:layout_height="wrap_content"/>
 
 
+    <CheckBox
+        android:id="@+id/cbRecordarUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recordar Usuario" />
+
     <Button
         android:id="@+id/btnContinuar"
         android:text="Continuar"
