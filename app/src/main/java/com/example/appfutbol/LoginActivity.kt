@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
         // Guardar preferencias de usuario
         guardarPreferenciasUsuario(usuario, recordarUsuario)
 
-        // Aquí iría la lógica de autenticación real
+        // lógica de autenticación real
         // Por ahora, simulamos un login exitoso
         if (autenticarUsuario(usuario, contra)) {
             Toast.makeText(this, "¡Bienvenido $usuario!", Toast.LENGTH_SHORT).show()
@@ -118,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun autenticarUsuario(usuario: String, contra: String): Boolean {
         // Simulación de autenticación
-        // En una app real, aquí se verifica contra una base de datos o API
+        // verificar contra una base de datos
         return usuario.isNotEmpty() && contra.length >= 6
     }
 

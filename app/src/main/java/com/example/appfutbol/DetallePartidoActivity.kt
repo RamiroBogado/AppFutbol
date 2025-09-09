@@ -44,22 +44,6 @@ class DetallePartidoActivity : AppCompatActivity() {
         }
     }
 
-    private fun obtenerEstadisticas(partidoId: Int): String {
-        return when (partidoId) {
-            1 -> "Posesión: 58% - 42%\nTiros: 18 - 9\nTiros a puerta: 8 - 3\nFaltas: 10 - 14\nSaques de esquina: 7 - 4"
-            2 -> "Posesión: 62% - 38%\nTiros: 15 - 5\nTiros a puerta: 7 - 1\nFaltas: 8 - 12\nSaques de esquina: 6 - 2"
-            3 -> "Posesión: 45% - 55%\nTiros: 11 - 16\nTiros a puerta: 4 - 6\nFaltas: 13 - 9\nSaques de esquina: 3 - 8"
-            4 -> "Posesión: 48% - 52%\nTiros: 13 - 15\nTiros a puerta: 5 - 7\nFaltas: 11 - 10\nSaques de esquina: 4 - 5"
-            5 -> "Posesión: 54% - 46%\nTiros: 16 - 12\nTiros a puerta: 9 - 5\nFaltas: 9 - 13\nSaques de esquina: 7 - 3"
-            6 -> "Posesión: 51% - 49%\nTiros: 10 - 11\nTiros a puerta: 3 - 4\nFaltas: 14 - 11\nSaques de esquina: 5 - 6"
-            7 -> "Posesión: 47% - 53%\nTiros: 8 - 13\nTiros a puerta: 2 - 5\nFaltas: 12 - 8\nSaques de esquina: 2 - 7"
-            8 -> "Posesión: 56% - 44%\nTiros: 14 - 8\nTiros a puerta: 6 - 3\nFaltas: 10 - 15\nSaques de esquina: 8 - 2"
-            9 -> "Posesión: 60% - 40%\nTiros: 17 - 7\nTiros a puerta: 8 - 2\nFaltas: 7 - 16\nSaques de esquina: 9 - 1"
-            10 -> "Posesión: 49% - 51%\nTiros: 12 - 14\nTiros a puerta: 5 - 6\nFaltas: 13 - 12\nSaques de esquina: 4 - 7"
-            else -> "Estadísticas no disponibles"
-        }
-    }
-
     private fun obtenerGoles(partidoId: Int): List<Gol> {
         return when (partidoId) {
             1 -> listOf(

@@ -98,7 +98,7 @@ class RegistroActivity : AppCompatActivity() {
         // Mensaje de éxito
         Toast.makeText(this, "Usuario $usuario registrado exitosamente", Toast.LENGTH_SHORT).show()
 
-        //lógica para guardar el usuario en SharedPreferences o base de datos
+        //guardar el usuario en SharedPreferences
         guardarUsuario(usuario)
 
         // Redirigir a la actividad login
@@ -108,7 +108,7 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     private fun guardarUsuario(usuario: String) {
-        // Ejemplo de cómo guardar en SharedPreferences
+        // guardar en SharedPreferences
         val sharedPreferences = getSharedPreferences("AppFutbolPrefs", MODE_PRIVATE)
         sharedPreferences.edit {
             putString("usuario", usuario)
