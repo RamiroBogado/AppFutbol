@@ -36,16 +36,16 @@ class MainActivity : AppCompatActivity() {
     private fun setupButtonListener() {
 
         btnRegistrarme.setOnClickListener {
+
             val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
-            //finish()
+
         }
 
         btnIniciar.setOnClickListener {
 
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            //finish()
 
         }
     }
