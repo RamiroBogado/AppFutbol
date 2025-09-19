@@ -3,24 +3,28 @@ package com.example.appfutbol
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.edit
 
 class LoginActivity : AppCompatActivity() {
+
     lateinit var etUsuario: EditText
     lateinit var etContra: EditText
     lateinit var cbRecordarUsuario: CheckBox
     lateinit var btnContinuar: Button
-
     lateinit var btnVolver: Button
     lateinit var sharedPreferences: SharedPreferences
+
+    // Base de datos
+    lateinit var db: AppDatabase
+    lateinit var usuarioDao: UsuarioDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,11 @@ class LoginActivity : AppCompatActivity() {
         initViews()
         setupSharedPreferences()
         cargarUsuarioGuardado()
+
+        // Inicializar base de datos
+        db = AppDatabase.getDatabase(this)
+        usuarioDao = db.usuarioDao()
+
         setupButtonListener()
     }
 
@@ -62,7 +71,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupButtonListener() {
-
         btnContinuar.setOnClickListener {
             if (validarCampos()) {
                 iniciarSesion()
@@ -101,12 +109,12 @@ class LoginActivity : AppCompatActivity() {
         // Guardar preferencias de usuario
         guardarPreferenciasUsuario(usuario, recordarUsuario)
 
-        // lógica de autenticación real
-        // Por ahora, simulamos un login exitoso
-        if (autenticarUsuario(usuario, contra)) {
+        // Lógica de autenticación
+        val usuarioExistente = usuarioDao.getByUsuario(usuario)
+        if (usuarioExistente != null && usuarioExistente.pass == contra) {
             Toast.makeText(this, "¡Bienvenido $usuario!", Toast.LENGTH_SHORT).show()
 
-            // Redirigir a la actividad ligas
+            // Redirigir a LigasActivity
             val intent = Intent(this, LigasActivity::class.java)
             intent.putExtra("usuario", usuario)
             startActivity(intent)
@@ -116,15 +124,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun autenticarUsuario(usuario: String, contra: String): Boolean {
-        // Simulación de autenticación
-        // verificar contra una base de datos
-        return usuario.isNotEmpty() && contra.length >= 6
-    }
-
     private fun guardarPreferenciasUsuario(usuario: String, recordarUsuario: Boolean) {
         sharedPreferences.edit {
-
             if (recordarUsuario) {
                 putString("usuario", usuario)
             } else {
@@ -133,5 +134,4 @@ class LoginActivity : AppCompatActivity() {
             putBoolean("recordar_usuario", recordarUsuario)
         }
     }
-
 }
