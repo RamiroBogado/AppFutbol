@@ -8,6 +8,9 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.Button
 import android.widget.LinearLayout
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 
 class LigasActivity : AppCompatActivity() {
 
@@ -17,6 +20,7 @@ class LigasActivity : AppCompatActivity() {
     lateinit var btnLogo4: LinearLayout
 
     lateinit var btnVolver: Button
+    lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +33,17 @@ class LigasActivity : AppCompatActivity() {
             insets
         }
 
+        setUpToolBar()
         initViews()
         setupButtonListeners()
+    }
+
+    private fun setUpToolBar(){
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.title = resources.getString(R.string.titulo)
+
     }
 
     private fun initViews() {
@@ -72,6 +85,44 @@ class LigasActivity : AppCompatActivity() {
         btnVolver.setOnClickListener {
             // Volver a la actividad anterior
             finish()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        super.onPrepareOptionsMenu(menu)
+        // Ocultar ítem
+        val listadoItem1 = menu.findItem(R.id.item_listado_ligas)
+        listadoItem1?.isVisible = false
+        val listadoItem2 = menu.findItem(R.id.item_listado_lista)
+        listadoItem2?.isVisible = false
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.item_logout -> {
+                val intent = Intent(this, MainActivity::class.java)
+                // Limpia el stack de actividades
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+                true
+            }
+
+            R.id.item_listado_ligas -> {
+                val intent = Intent(this, LigasActivity::class.java)
+                startActivity(intent)
+                finish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
