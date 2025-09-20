@@ -6,8 +6,9 @@ import androidx.room.Entity
 
 @Entity(tableName ="Usuarios")
 data class Usuario(
+    @PrimaryKey(autoGenerate = true)val id: Int=0,
     @ColumnInfo(name = "usuario") val usuario: String,
     @ColumnInfo(name = "pass") val pass: String
-){
-    @PrimaryKey(autoGenerate = true)val id: Int=0
-}
+)
+
+
