@@ -51,7 +51,9 @@
             android:backgroundTint="@android:color/black"
             android:text="Volver"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:drawableLeft="@android:drawable/ic_media_previous"
+            android:drawableTint="@android:color/white"/>
 
     </LinearLayout>
 
