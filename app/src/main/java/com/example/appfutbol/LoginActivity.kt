@@ -109,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
         // Guardar preferencias de usuario
         guardarPreferenciasUsuario(usuario, recordarUsuario)
 
-        // Lógica de autenticación
+        // Autenticación
         val usuarioExistente = usuarioDao.getByUsuario(usuario)
         if (usuarioExistente != null && usuarioExistente.pass == contra) {
             Toast.makeText(this, "¡Bienvenido $usuario!", Toast.LENGTH_SHORT).show()
