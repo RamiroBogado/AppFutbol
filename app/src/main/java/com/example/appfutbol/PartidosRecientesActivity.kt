@@ -4,22 +4,33 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.Button
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
+import com.example.appfutbol.adapters.PartidoAdapter
+import com.example.appfutbol.dtos.Match
+import com.example.appfutbol.viewmodels.PartidosViewModel
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PartidosRecientesActivity : AppCompatActivity() {
-
     private lateinit var rvPartidos: RecyclerView
     private lateinit var partidoAdapter: PartidoAdapter
     private lateinit var btnVolver: Button
+    private lateinit var progressBar: ProgressBar
+    private lateinit var toolbar: Toolbar
 
-    lateinit var toolbar : Toolbar
+    private val viewModel: PartidosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,32 +43,113 @@ class PartidosRecientesActivity : AppCompatActivity() {
             insets
         }
 
+        initViews()
         setUpToolBar()
         setupRecyclerView()
         setupButtonVolver()
+        setupObservers()
+
+        // Cargar datos reales
+        viewModel.cargarPartidos()
     }
 
-    private fun setUpToolBar(){
+    private fun initViews() {
+        rvPartidos = findViewById(R.id.rvPartidos)
+        btnVolver = findViewById(R.id.btnVolver)
+        toolbar = findViewById(R.id.toolbar)
+        progressBar = findViewById(R.id.progressBar)
+    }
 
+    private fun setUpToolBar() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = resources.getString(R.string.titulo)
-
     }
 
     private fun setupRecyclerView() {
-        rvPartidos = findViewById(R.id.rvPartidos)
-        rvPartidos.layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
 
-        val partidos = getPartidosPremierLeague()
-        partidoAdapter = PartidoAdapter(partidos, this)
+        rvPartidos.layoutManager = layoutManager
+        partidoAdapter = PartidoAdapter(mutableListOf(), this)
         rvPartidos.adapter = partidoAdapter
     }
 
     private fun setupButtonVolver() {
-        btnVolver = findViewById(R.id.btnVolver)
         btnVolver.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun setupObservers() {
+        lifecycleScope.launch {
+            viewModel.partidosState.collect { state ->
+                when (state) {
+                    is PartidosViewModel.PartidosState.Loading -> {
+                        progressBar.visibility = android.view.View.VISIBLE
+                        rvPartidos.visibility = android.view.View.GONE
+                    }
+                    is PartidosViewModel.PartidosState.Success -> {
+                        progressBar.visibility = android.view.View.GONE
+                        rvPartidos.visibility = android.view.View.VISIBLE
+                        val partidosConvertidos = convertirMatchesAPartidos(state.partidos)
+                        partidoAdapter.actualizarPartidos(partidosConvertidos)
+                    }
+                    is PartidosViewModel.PartidosState.Error -> {
+                        progressBar.visibility = android.view.View.GONE
+                        rvPartidos.visibility = android.view.View.VISIBLE
+                        Toast.makeText(this@PartidosRecientesActivity, "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
+                        // Lista vacía en caso de error
+                        partidoAdapter.actualizarPartidos(mutableListOf())
+                    }
+                }
+            }
+        }
+    }
+    // Función para convertir Match (DTO) a Partido
+    private fun convertirMatchesAPartidos(matches: List<Match>): MutableList<Partido> {
+        return matches.map { match ->
+            Partido(
+                id = match.id,
+                fecha = formatearFecha(match.utcDate),
+                hora = formatearHora(match.utcDate),
+                equipoLocal = match.homeTeam.name,
+                equipoVisitante = match.awayTeam.name,
+                resultado = formatearResultado(match.score.fullTime)
+            )
+        }.toMutableList()
+    }
+
+    private fun formatearFecha(utcDate: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+            val date = inputFormat.parse(utcDate)
+
+            date?.let { outputFormat.format(it) } ?: "Fecha no disponible"
+        } catch (e: Exception) {
+            "Fecha no disponible"
+        }
+    }
+
+    private fun formatearHora(utcDate: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val date = inputFormat.parse(utcDate)
+
+            date?.let { outputFormat.format(it) } ?: "Hora no disponible"
+        } catch (e: Exception) {
+            "Hora no disponible"
+        }
+    }
+
+    private fun formatearResultado(fullTime: com.example.appfutbol.dtos.FullTimeScore?): String {
+        return if (fullTime?.home != null && fullTime.away != null) {
+            "${fullTime.home} - ${fullTime.away}"
+        } else {
+            "VS"
         }
     }
 
@@ -68,46 +160,26 @@ class PartidosRecientesActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-
             R.id.item_logout -> {
                 val intent = Intent(this, MainActivity::class.java)
-                // Limpia el stack de actividades
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
                 true
             }
-
             R.id.item_listado_ligas -> {
                 val intent = Intent(this, LigasActivity::class.java)
                 startActivity(intent)
                 finish()
                 true
             }
-
             R.id.item_listado_lista -> {
                 val intent = Intent(this, ListaActivity::class.java)
                 startActivity(intent)
                 finish()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun getPartidosPremierLeague(): MutableList<Partido> {
-        return mutableListOf(
-            Partido(1, "2025/09/28", "15:00", "Manchester City", "Liverpool", "2 - 1"),
-            Partido(2, "2025/09/28", "12:30", "Arsenal", "Chelsea", "3 - 0"),
-            Partido(3, "2025/09/27", "15:00", "Manchester United", "Tottenham", "1 - 1"),
-            Partido(4, "2025/09/27", "12:30", "Newcastle", "Aston Villa", "2 - 3"),
-            Partido(5, "2025/09/26", "20:00", "Brighton", "West Ham", "4 - 2"),
-            Partido(6, "2025/09/26", "17:30", "Brentford", "Wolverhampton", "0 - 0"),
-            Partido(7, "2025/09/25", "19:45", "Crystal Palace", "Fulham", "1 - 0"),
-            Partido(8, "2025/09/25", "17:00", "Everton", "Nottingham Forest", "2 - 1"),
-            Partido(9, "2025/09/24", "20:00", "Burnley", "Sheffield United", "3 - 1"),
-            Partido(10, "2025/09/24", "18:00", "Bournemouth", "Luton Town", "2 - 2")
-        )
     }
 }
