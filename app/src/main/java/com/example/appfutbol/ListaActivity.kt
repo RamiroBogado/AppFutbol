@@ -81,8 +81,8 @@ class ListaActivity : AppCompatActivity() {
 
         btnGoleadores.setOnClickListener {
             // Navegar a Goleadores
-            // val intent = Intent(this, GoleadoresActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, GoleadoresActivity::class.java)
+            startActivity(intent)
         }
 
         btnVolver.setOnClickListener {

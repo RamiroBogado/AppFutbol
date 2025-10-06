@@ -45,6 +45,9 @@
         <activity android:name=".PartidosRecientesActivity"
             android:exported="false"/>
 
+        <activity android:name=".GoleadoresActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
