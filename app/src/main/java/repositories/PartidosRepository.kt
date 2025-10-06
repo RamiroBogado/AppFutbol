@@ -6,7 +6,18 @@ import com.example.appfutbol.dtos.PartidosDTO
 class PartidosRepository {
     private val apiService = RetrofitClient.getFootballApiService()
 
-    suspend fun obtenerPartidos(): PartidosDTO {
-        return apiService.getPartidos()
+    suspend fun obtenerJornadaActual(): Int {
+        val response = apiService.getCompetencia()
+        return response.currentSeason.currentMatchday
+    }
+
+    suspend fun obtenerPartidosRecientes(): PartidosDTO {
+        val jornadaActual = obtenerJornadaActual()
+        return apiService.getPartidos(jornadaActual) // Jornada actual
+    }
+
+    suspend fun obtenerProximosPartidos(): PartidosDTO {
+        val jornadaActual = obtenerJornadaActual()
+        return apiService.getPartidos(jornadaActual + 1) // Jornada proxima
     }
 }

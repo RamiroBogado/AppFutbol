@@ -69,14 +69,14 @@ class ListaActivity : AppCompatActivity() {
 
         btnProximosPartidos.setOnClickListener {
             // Navegar a Próximos Partidos
-            // val intent = Intent(this, ProximosPartidosActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, ProximosPartidosActivity::class.java)
+            startActivity(intent)
         }
 
         btnTabla.setOnClickListener {
             // Navegar a Tabla de Posiciones
-            // val intent = Intent(this, TablaActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, TablaPosicionesActivity::class.java)
+            startActivity(intent)
         }
 
         btnGoleadores.setOnClickListener {

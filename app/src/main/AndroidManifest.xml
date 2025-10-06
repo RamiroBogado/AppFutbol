@@ -48,6 +48,12 @@
         <activity android:name=".GoleadoresActivity"
             android:exported="false" />
 
+        <activity android:name=".TablaPosicionesActivity"
+            android:exported="false" />
+
+        <activity android:name=".ProximosPartidosActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

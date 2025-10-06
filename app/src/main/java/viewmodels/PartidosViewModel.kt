@@ -11,15 +11,15 @@ import kotlinx.coroutines.launch
 
 class PartidosViewModel : ViewModel() {
     private val repository = PartidosRepository()
-
     private val _partidosState = MutableStateFlow<PartidosState>(PartidosState.Loading)
     val partidosState: StateFlow<PartidosState> = _partidosState.asStateFlow()
 
-    fun cargarPartidos() {
+    fun cargarPartidosRecientes() {
         viewModelScope.launch {
             _partidosState.value = PartidosState.Loading
+
             try {
-                val response = repository.obtenerPartidos()
+                val response = repository.obtenerPartidosRecientes()
                 _partidosState.value = PartidosState.Success(response.matches)
             } catch (e: Exception) {
                 _partidosState.value = PartidosState.Error(e.message ?: "Error desconocido")
@@ -27,7 +27,18 @@ class PartidosViewModel : ViewModel() {
         }
     }
 
-    // Define PartidosState dentro del ViewModel o como sealed class separada
+    fun cargarProximosPartidos() {
+        viewModelScope.launch {
+            _partidosState.value = PartidosState.Loading
+            try {
+                val response = repository.obtenerProximosPartidos()
+                _partidosState.value = PartidosState.Success(response.matches)
+            } catch (e: Exception) {
+                _partidosState.value = PartidosState.Error(e.message ?: "Error desconocido")
+            }
+        }
+    }
+
     sealed class PartidosState {
         object Loading : PartidosState()
         data class Success(val partidos: List<Match>) : PartidosState()
