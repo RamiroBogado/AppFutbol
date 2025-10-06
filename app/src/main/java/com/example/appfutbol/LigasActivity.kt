@@ -59,31 +59,38 @@ class LigasActivity : AppCompatActivity() {
     private fun setupButtonListeners() {
 
         btnLogo1.setOnClickListener {
-            // Acción para la primera liga (Premier League)
-            val intent = Intent(this, ListaActivity::class.java)
+            // Premier League
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "PL")
+            }
             startActivity(intent)
         }
 
         btnLogo2.setOnClickListener {
-            // Acción para la segunda liga (BundesLiga)
-            // val intent = Intent(this, ListaActivity::class.java)
-            // startActivity(intent)
+            // Bundesliga
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "BL1")
+            }
+            startActivity(intent)
         }
 
         btnLogo3.setOnClickListener {
-            // Acción para la tercera liga (Serie A)
-            // val intent = Intent(this, ListaActivity::class.java)
-            // startActivity(intent)
+            // Serie A
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "SA")
+            }
+            startActivity(intent)
         }
 
         btnLogo4.setOnClickListener {
-            // Acción para la cuarta liga (La Liga)
-            // val intent = Intent(this, ListaActivity::class.java)
-            // startActivity(intent)
+            // La Liga
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "PD")
+            }
+            startActivity(intent)
         }
 
         btnVolver.setOnClickListener {
-            // Volver a la actividad anterior
             finish()
         }
     }

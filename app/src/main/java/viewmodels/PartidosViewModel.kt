@@ -14,12 +14,11 @@ class PartidosViewModel : ViewModel() {
     private val _partidosState = MutableStateFlow<PartidosState>(PartidosState.Loading)
     val partidosState: StateFlow<PartidosState> = _partidosState.asStateFlow()
 
-    fun cargarPartidosRecientes() {
+    fun cargarPartidosRecientes(competition: String = "PL") {
         viewModelScope.launch {
             _partidosState.value = PartidosState.Loading
-
             try {
-                val response = repository.obtenerPartidosRecientes()
+                val response = repository.obtenerPartidosRecientes(competition)
                 _partidosState.value = PartidosState.Success(response.matches)
             } catch (e: Exception) {
                 _partidosState.value = PartidosState.Error(e.message ?: "Error desconocido")
@@ -27,11 +26,11 @@ class PartidosViewModel : ViewModel() {
         }
     }
 
-    fun cargarProximosPartidos() {
+    fun cargarProximosPartidos(competition: String = "PL") {
         viewModelScope.launch {
             _partidosState.value = PartidosState.Loading
             try {
-                val response = repository.obtenerProximosPartidos()
+                val response = repository.obtenerProximosPartidos(competition)
                 _partidosState.value = PartidosState.Success(response.matches)
             } catch (e: Exception) {
                 _partidosState.value = PartidosState.Error(e.message ?: "Error desconocido")

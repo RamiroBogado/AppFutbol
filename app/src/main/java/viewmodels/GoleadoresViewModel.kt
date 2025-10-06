@@ -15,11 +15,11 @@ class GoleadoresViewModel : ViewModel() {
     private val _goleadoresState = MutableStateFlow<GoleadoresState>(GoleadoresState.Loading)
     val goleadoresState: StateFlow<GoleadoresState> = _goleadoresState.asStateFlow()
 
-    fun cargarGoleadores() {
+    fun cargarGoleadores(competition: String = "PL") { // Agregar parámetro competition
         viewModelScope.launch {
             _goleadoresState.value = GoleadoresState.Loading
             try {
-                val response = repository.obtenerGoleadores()
+                val response = repository.obtenerGoleadores(competition) // Pasar competition
                 val goleadoresConvertidos = convertirScorersAGoleadores(response.scorers)
                 _goleadoresState.value = GoleadoresState.Success(goleadoresConvertidos)
             } catch (e: Exception) {

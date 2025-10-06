@@ -6,7 +6,7 @@ import com.example.appfutbol.dtos.TablaPosicionesDTO
 class TablaPosicionesRepository {
     private val apiService = RetrofitClient.getFootballApiService()
 
-    suspend fun obtenerTablaPosiciones(): TablaPosicionesDTO {
-        return apiService.getTablaPosiciones()
+    suspend fun obtenerTablaPosiciones(competition: String = "PL"): TablaPosicionesDTO {
+        return apiService.getTablaPosiciones(competition)
     }
 }

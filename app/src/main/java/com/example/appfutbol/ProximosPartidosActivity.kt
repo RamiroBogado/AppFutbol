@@ -28,13 +28,17 @@ class ProximosPartidosActivity : AppCompatActivity() {
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
-
     private val viewModel: PartidosViewModel by viewModels()
+
+    private var currentCompetition: String = "PL" // Por defecto Premier League
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_partidos_recientes) // Mismo layout
+
+        // Recibir la competencia seleccionada
+        currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -48,8 +52,8 @@ class ProximosPartidosActivity : AppCompatActivity() {
         setupButtonVolver()
         setupObservers()
 
-        // Cargar datos reales
-        viewModel.cargarProximosPartidos()
+        // Cargar datos reales con la competencia seleccionada
+        viewModel.cargarProximosPartidos(currentCompetition)
     }
 
     private fun initViews() {

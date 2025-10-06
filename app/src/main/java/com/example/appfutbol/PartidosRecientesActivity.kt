@@ -29,13 +29,16 @@ class PartidosRecientesActivity : AppCompatActivity() {
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
-
     private val viewModel: PartidosViewModel by viewModels()
+
+    private var currentCompetition: String = "PL" // Por defecto Premier League
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_partidos_recientes)
+
+        currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -49,8 +52,8 @@ class PartidosRecientesActivity : AppCompatActivity() {
         setupButtonVolver()
         setupObservers()
 
-        // Cargar datos reales
-        viewModel.cargarPartidosRecientes()
+        // Cargar datos reales con la competencia seleccionada
+        viewModel.cargarPartidosRecientes(currentCompetition)
     }
 
     private fun initViews() {
@@ -100,7 +103,6 @@ class PartidosRecientesActivity : AppCompatActivity() {
                         progressBar.visibility = android.view.View.GONE
                         rvPartidos.visibility = android.view.View.VISIBLE
                         Toast.makeText(this@PartidosRecientesActivity, "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
-                        // Lista vacía en caso de error
                         partidoAdapter.actualizarPartidos(mutableListOf())
                     }
                 }
@@ -175,7 +177,9 @@ class PartidosRecientesActivity : AppCompatActivity() {
                 true
             }
             R.id.item_listado_lista -> {
-                val intent = Intent(this, ListaActivity::class.java)
+                val intent = Intent(this, ListaActivity::class.java).apply {
+                    putExtra("COMPETITION", currentCompetition) // Pasar la competencia actual
+                }
                 startActivity(intent)
                 finish()
                 true

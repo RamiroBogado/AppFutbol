@@ -27,13 +27,17 @@ class GoleadoresActivity : AppCompatActivity() {
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
-
     private val viewModel: GoleadoresViewModel by viewModels()
+
+    private var currentCompetition: String = "PL" // Por defecto Premier League
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_goleadores)
+
+        // Recibir la competencia seleccionada
+        currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -47,8 +51,8 @@ class GoleadoresActivity : AppCompatActivity() {
         setupButtonVolver()
         setupObservers()
 
-        // Cargar datos de goleadores
-        viewModel.cargarGoleadores()
+        // Cargar datos reales con la competencia seleccionada
+        viewModel.cargarGoleadores(currentCompetition)
     }
 
     private fun initViews() {

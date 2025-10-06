@@ -27,13 +27,17 @@ class TablaPosicionesActivity : AppCompatActivity() {
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
-
     private val viewModel: TablaPosicionesViewModel by viewModels()
+
+    private var currentCompetition: String = "PL" // Por defecto Premier League
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_tabla_posiciones)
+
+        // Recibir la competencia seleccionada
+        currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -47,8 +51,8 @@ class TablaPosicionesActivity : AppCompatActivity() {
         setupButtonVolver()
         setupObservers()
 
-        // Cargar datos de tabla de posiciones
-        viewModel.cargarTablaPosiciones()
+        // Cargar datos reales con la competencia seleccionada
+        viewModel.cargarTablaPosiciones(currentCompetition)
     }
 
     private fun initViews() {

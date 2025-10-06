@@ -24,11 +24,17 @@ class ListaActivity : AppCompatActivity() {
     //toolbar
     lateinit var toolbar : Toolbar
 
+    private var currentCompetition: String = "PL" // Por defecto Premier League
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_lista) // Asegúrate de que el nombre del layout coincida
+
+        // Recibir la competencia seleccionada
+        currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.lista)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -63,25 +69,33 @@ class ListaActivity : AppCompatActivity() {
 
         btnPartidosRecientes.setOnClickListener {
             // Navegar a Partidos Recientes
-            val intent = Intent(this, PartidosRecientesActivity::class.java)
+            val intent = Intent(this, PartidosRecientesActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+            }
             startActivity(intent)
         }
 
         btnProximosPartidos.setOnClickListener {
             // Navegar a Próximos Partidos
-            val intent = Intent(this, ProximosPartidosActivity::class.java)
+            val intent = Intent(this, ProximosPartidosActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+            }
             startActivity(intent)
         }
 
         btnTabla.setOnClickListener {
             // Navegar a Tabla de Posiciones
-            val intent = Intent(this, TablaPosicionesActivity::class.java)
+            val intent = Intent(this, TablaPosicionesActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+            }
             startActivity(intent)
         }
 
         btnGoleadores.setOnClickListener {
             // Navegar a Goleadores
-            val intent = Intent(this, GoleadoresActivity::class.java)
+            val intent = Intent(this, GoleadoresActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+            }
             startActivity(intent)
         }
 

@@ -15,11 +15,11 @@ class TablaPosicionesViewModel : ViewModel() {
     private val _tablaPosicionesState = MutableStateFlow<TablaPosicionesState>(TablaPosicionesState.Loading)
     val tablaPosicionesState: StateFlow<TablaPosicionesState> = _tablaPosicionesState.asStateFlow()
 
-    fun cargarTablaPosiciones() {
+    fun cargarTablaPosiciones(competition: String = "PL") {
         viewModelScope.launch {
             _tablaPosicionesState.value = TablaPosicionesState.Loading
             try {
-                val response = repository.obtenerTablaPosiciones()
+                val response = repository.obtenerTablaPosiciones(competition)
                 val tablaConvertida = convertirStandingsAEquipos(response.standings)
                 _tablaPosicionesState.value = TablaPosicionesState.Success(tablaConvertida)
             } catch (e: Exception) {
@@ -29,7 +29,6 @@ class TablaPosicionesViewModel : ViewModel() {
     }
 
     private fun convertirStandingsAEquipos(standings: List<com.example.appfutbol.dtos.Standing>): List<EquipoPosicion> {
-        // La API devuelve una lista de Standing, tomamos el primero que contiene la tabla
         return standings.firstOrNull()?.table?.map { teamStanding ->
             EquipoPosicion(
                 posicion = teamStanding.position,
