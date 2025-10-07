@@ -1,10 +1,8 @@
-package com.example.appfutbol
-
-import java.io.Serializable
+package com.example.appfutbol.models
 
 data class Tarjeta(
     val minuto: Int,
     val equipo: String,
     val jugador: String,
     val color: String
-) : Serializable
+)

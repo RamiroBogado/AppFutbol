@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.example.appfutbol.adapters.PartidoAdapter
 import com.example.appfutbol.dtos.Match
+import com.example.appfutbol.models.Partido
 import com.example.appfutbol.viewmodels.PartidosViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

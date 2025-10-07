@@ -1,5 +1,6 @@
 package com.example.appfutbol
 
+import adapters.GoleadoresAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -126,7 +127,9 @@ class GoleadoresActivity : AppCompatActivity() {
                 true
             }
             R.id.item_listado_lista -> {
-                val intent = Intent(this, ListaActivity::class.java)
+                val intent = Intent(this, ListaActivity::class.java).apply {
+                    putExtra("COMPETITION", currentCompetition)
+                }
                 startActivity(intent)
                 finish()
                 true

@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.widget.Button
+import com.example.appfutbol.models.Partido
+import com.example.appfutbol.models.Gol
+import com.example.appfutbol.models.Tarjeta
 
 class DetallePartidoActivity : AppCompatActivity() {
 

@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.example.appfutbol.adapters.PartidoAdapter
+import com.example.appfutbol.models.Partido
 import com.example.appfutbol.viewmodels.PartidosViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -28,6 +30,8 @@ class ProximosPartidosActivity : AppCompatActivity() {
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
+
+    private lateinit var tvResultado : TextView
     private val viewModel: PartidosViewModel by viewModels()
 
     private var currentCompetition: String = "PL" // Por defecto Premier League
@@ -61,6 +65,7 @@ class ProximosPartidosActivity : AppCompatActivity() {
         btnVolver = findViewById(R.id.btnVolver)
         toolbar = findViewById(R.id.toolbar)
         progressBar = findViewById(R.id.progressBar)
+
     }
 
     private fun setUpToolBar() {
@@ -70,10 +75,11 @@ class ProximosPartidosActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        // Para próximos partidos, mostrar en orden normal (no reverso)
+
         rvPartidos.layoutManager = LinearLayoutManager(this)
         partidoAdapter = PartidoAdapter(mutableListOf(), this)
         rvPartidos.adapter = partidoAdapter
+
     }
 
     private fun setupButtonVolver() {
@@ -94,22 +100,9 @@ class ProximosPartidosActivity : AppCompatActivity() {
                         progressBar.visibility = android.view.View.GONE
                         rvPartidos.visibility = android.view.View.VISIBLE
 
-                        // DEBUG: SIN FILTRO - mostrar todos los partidos
-                        println("DEBUG - Total partidos recibidos: ${state.partidos.size}")
-                        state.partidos.forEachIndexed { index, match ->
-                            println("DEBUG - Partido $index: ${match.homeTeam.name} vs ${match.awayTeam.name} - Fecha: ${match.utcDate}")
-                        }
-
-                        // SIN FILTRO: usar todos los partidos
                         val partidosConvertidos = convertirMatchesAPartidos(state.partidos)
                         partidoAdapter.actualizarPartidos(partidosConvertidos)
 
-                        // Mostrar mensaje temporal
-                        Toast.makeText(
-                            this@ProximosPartidosActivity,
-                            "Mostrando ${state.partidos.size} partidos (sin filtro)",
-                            Toast.LENGTH_LONG
-                        ).show()
                     }
                     is PartidosViewModel.PartidosState.Error -> {
                         progressBar.visibility = android.view.View.GONE
@@ -122,23 +115,6 @@ class ProximosPartidosActivity : AppCompatActivity() {
         }
     }
 
-    // FUNCIÓN NUEVA: Filtrar solo partidos futuros
-    private fun filtrarPartidosFuturos(matches: List<com.example.appfutbol.dtos.Match>): List<com.example.appfutbol.dtos.Match> {
-        val ahora = Calendar.getInstance().time
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-
-        return matches.filter { match ->
-            try {
-                val fechaPartido = inputFormat.parse(match.utcDate)
-                fechaPartido != null && fechaPartido.after(ahora)
-            } catch (e: Exception) {
-                false
-            }
-        }.sortedBy { match -> // Ordenar por fecha más cercana
-            inputFormat.parse(match.utcDate)
-        }
-    }
-
     // Función para convertir Match (DTO) a Partido
     private fun convertirMatchesAPartidos(matches: List<com.example.appfutbol.dtos.Match>): MutableList<Partido> {
         return matches.map { match ->
@@ -148,19 +124,11 @@ class ProximosPartidosActivity : AppCompatActivity() {
                 hora = formatearHora(match.utcDate),
                 equipoLocal = match.homeTeam.name,
                 equipoVisitante = match.awayTeam.name,
-                resultado = formatearResultado(match.score.fullTime) // Mostrar resultado real
+                resultado = " - "
             )
         }.toMutableList()
     }
-
-    private fun formatearResultado(fullTime: com.example.appfutbol.dtos.FullTimeScore?): String {
-        return if (fullTime?.home != null && fullTime.away != null) {
-            "${fullTime.home} - ${fullTime.away}"
-        } else {
-            "VS"
-        }
-    }
-
+    
     private fun formatearFecha(utcDate: String): String {
         return try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
@@ -204,13 +172,15 @@ class ProximosPartidosActivity : AppCompatActivity() {
                 true
             }
             R.id.item_listado_lista -> {
-                val intent = Intent(this, PartidosRecientesActivity::class.java)
+                val intent = Intent(this, ListaActivity::class.java).apply {
+                    putExtra("COMPETITION", currentCompetition)
+                }
                 startActivity(intent)
                 finish()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

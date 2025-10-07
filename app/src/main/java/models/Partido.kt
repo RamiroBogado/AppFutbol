@@ -1,7 +1,4 @@
-package com.example.appfutbol
-
-import java.io.Serializable
-
+package com.example.appfutbol.models
 data class Partido(
     val id: Int,
     val fecha: String,
@@ -9,4 +6,4 @@ data class Partido(
     val equipoLocal: String,
     val equipoVisitante: String,
     val resultado: String
-) : Serializable
+)

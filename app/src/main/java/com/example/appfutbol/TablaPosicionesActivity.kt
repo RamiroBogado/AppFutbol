@@ -28,7 +28,6 @@ class TablaPosicionesActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
     private val viewModel: TablaPosicionesViewModel by viewModels()
-
     private var currentCompetition: String = "PL" // Por defecto Premier League
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,17 +125,13 @@ class TablaPosicionesActivity : AppCompatActivity() {
                 true
             }
             R.id.item_listado_lista -> {
-                val intent = Intent(this, PartidosRecientesActivity::class.java)
+                val intent = Intent(this, ListaActivity::class.java).apply {
+                    putExtra("COMPETITION", currentCompetition)
+                }
                 startActivity(intent)
                 finish()
                 true
             }
-            /*R.id.item_goleadores -> {
-                val intent = Intent(this, GoleadoresActivity::class.java)
-                startActivity(intent)
-                finish()
-                true
-            }*/
             else -> super.onOptionsItemSelected(item)
         }
     }

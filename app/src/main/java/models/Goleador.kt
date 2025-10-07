@@ -1,4 +1,4 @@
-package com.example.appfutbol
+package com.example.appfutbol.models
 
 data class Goleador(
     val nombre: String,
