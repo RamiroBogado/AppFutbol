@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -30,8 +29,6 @@ class ProximosPartidosActivity : AppCompatActivity() {
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
-
-    private lateinit var tvResultado : TextView
     private val viewModel: PartidosViewModel by viewModels()
 
     private var currentCompetition: String = "PL" // Por defecto Premier League
@@ -77,7 +74,7 @@ class ProximosPartidosActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
 
         rvPartidos.layoutManager = LinearLayoutManager(this)
-        partidoAdapter = PartidoAdapter(mutableListOf(), this)
+        partidoAdapter = PartidoAdapter(mutableListOf())
         rvPartidos.adapter = partidoAdapter
 
     }

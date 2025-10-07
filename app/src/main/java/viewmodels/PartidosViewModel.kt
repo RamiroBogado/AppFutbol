@@ -3,7 +3,7 @@ package com.example.appfutbol.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appfutbol.dtos.Match
-import com.example.appfutbol.repository.PartidosRepository
+import com.example.appfutbol.repositories.PartidosRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

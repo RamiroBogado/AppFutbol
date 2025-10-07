@@ -2,7 +2,6 @@ package com.example.appfutbol.adapters
 
 import com.example.appfutbol.models.Partido
 import com.example.appfutbol.R
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PartidoAdapter(
     private var partidos: MutableList<Partido>,
-    private val context: Context
 ) : RecyclerView.Adapter<PartidoAdapter.PartidoViewHolder>() {
 
     // Método para actualizar los datos

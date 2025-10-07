@@ -1,4 +1,4 @@
-package com.example.appfutbol.repository
+package com.example.appfutbol.repositories
 
 import com.example.appfutbol.configurations.RetrofitClient
 import com.example.appfutbol.dtos.GoleadoresDTO

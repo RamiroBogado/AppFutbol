@@ -76,7 +76,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
         layoutManager.stackFromEnd = true
 
         rvPartidos.layoutManager = layoutManager
-        partidoAdapter = PartidoAdapter(mutableListOf(), this)
+        partidoAdapter = PartidoAdapter(mutableListOf())
         rvPartidos.adapter = partidoAdapter
     }
 

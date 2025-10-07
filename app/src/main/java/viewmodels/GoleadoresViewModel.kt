@@ -3,7 +3,7 @@ package com.example.appfutbol.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appfutbol.models.Goleador
-import com.example.appfutbol.repository.GoleadoresRepository
+import com.example.appfutbol.repositories.GoleadoresRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
