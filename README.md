@@ -12,7 +12,7 @@
 ## ⚙️ Funcionalidades Implementadas
 
 ### 🧩 Ramiro Bogado
-- 📋 [Lista con los datos principales de los elementos](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-ListaDatosPrincipales)  
+- 📋 [Lista con los datos principales de los elementos](https://github.com/RamiroBogado/AppFutbol/commits/tree/grupoA-RamiroBogado-ListaDatosPrincipales)  
 - 🔍 [Visualización de los **datos completos** de un elemento](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-DatoCompletoDeUnElemento)  
 - 📱 [Incorporación de **menú** y **barra superior**](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-menuYBarraSuperior)  
 - 🖼️ [Uso de **iconos nativos de Android**](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-iconosConImagenesNativas)  
