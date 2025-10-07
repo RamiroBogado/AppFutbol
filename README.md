@@ -17,7 +17,7 @@
 - 📱 [Incorporación de **menú** y **barra superior**](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-menuYBarraSuperior)  
 - 🖼️ [Uso de **iconos nativos de Android**](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-iconosConImagenesNativas)  
 - 🌐 [Llamado a una **API REST externa**](https://github.com/RamiroBogado/AppFutbol/tree/grupoA-RamiroBogado-llamadoAPIrest)  
-- ⚡ Ejecución del llamado en un **hilo de ejecución distinto** (multithreading).  
+- ⚡ [Ejecución del llamado en un **hilo de ejecución distinto** (multithreading).]()  
 
 ---
 
