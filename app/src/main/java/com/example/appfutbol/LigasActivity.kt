@@ -13,13 +13,13 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 
 class LigasActivity : AppCompatActivity() {
-
     lateinit var btnLogo1: LinearLayout
     lateinit var btnLogo2: LinearLayout
     lateinit var btnLogo3: LinearLayout
     lateinit var btnLogo4: LinearLayout
 
     lateinit var btnVolver: Button
+
     lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +62,7 @@ class LigasActivity : AppCompatActivity() {
             // Premier League
             val intent = Intent(this, ListaActivity::class.java).apply {
                 putExtra("COMPETITION", "PL")
+                putExtra("NOMBRE", "Premier League")
             }
             startActivity(intent)
         }
@@ -70,6 +71,7 @@ class LigasActivity : AppCompatActivity() {
             // Bundesliga
             val intent = Intent(this, ListaActivity::class.java).apply {
                 putExtra("COMPETITION", "BL1")
+                putExtra("NOMBRE", "Bundes Liga")
             }
             startActivity(intent)
         }
@@ -78,6 +80,7 @@ class LigasActivity : AppCompatActivity() {
             // Serie A
             val intent = Intent(this, ListaActivity::class.java).apply {
                 putExtra("COMPETITION", "SA")
+                putExtra("NOMBRE", "Serie A")
             }
             startActivity(intent)
         }
@@ -86,6 +89,7 @@ class LigasActivity : AppCompatActivity() {
             // La Liga
             val intent = Intent(this, ListaActivity::class.java).apply {
                 putExtra("COMPETITION", "PD")
+                putExtra("NOMBRE", "La Liga")
             }
             startActivity(intent)
         }

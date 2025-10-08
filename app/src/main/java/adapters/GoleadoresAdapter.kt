@@ -1,4 +1,4 @@
-package adapters
+package com.example.appfutbol.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +14,11 @@ class GoleadoresAdapter(
 
     // Método para actualizar los datos
     fun actualizarGoleadores(nuevosGoleadores: List<Goleador>) {
+        val oldSize = goleadores.size
         goleadores.clear()
+        notifyItemRangeRemoved(0, oldSize)
         goleadores.addAll(nuevosGoleadores)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, nuevosGoleadores.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoleadorViewHolder {
@@ -41,11 +43,11 @@ class GoleadoresAdapter(
             tvPosicion.text = posicion.toString()
             tvNombre.text = goleador.nombre
             tvEquipo.text = goleador.equipo
-            tvGoles.text = "${goleador.goles} goles"
+            tvGoles.text = itemView.context.getString(R.string.goles_count, goleador.goles)
 
             // Mostrar asistencias si están disponibles
             if (goleador.asistencias != null) {
-                tvAsistencias.text = "${goleador.asistencias} asistencias"
+                tvAsistencias.text = itemView.context.getString(R.string.asistencias_count, goleador.asistencias)
                 tvAsistencias.visibility = View.VISIBLE
             } else {
                 tvAsistencias.visibility = View.GONE

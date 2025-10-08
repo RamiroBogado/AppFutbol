@@ -1,6 +1,5 @@
 package com.example.appfutbol
 
-import adapters.GoleadoresAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -16,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
+import com.example.appfutbol.adapters.GoleadoresAdapter
 import com.example.appfutbol.viewmodels.GoleadoresViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,8 +29,7 @@ class GoleadoresActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
     private val viewModel: GoleadoresViewModel by viewModels()
-
-    private var currentCompetition: String = "PL" // Por defecto Premier League
+    private var currentCompetition : String = "PL"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +65,7 @@ class GoleadoresActivity : AppCompatActivity() {
     private fun setUpToolBar() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Tabla de Goleadores"
+        supportActionBar!!.title = intent.getStringExtra("NOMBRE")
     }
 
     private fun setupRecyclerView() {

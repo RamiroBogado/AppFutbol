@@ -11,15 +11,14 @@ import kotlinx.coroutines.launch
 
 class GoleadoresViewModel : ViewModel() {
     private val repository = GoleadoresRepository()
-
     private val _goleadoresState = MutableStateFlow<GoleadoresState>(GoleadoresState.Loading)
     val goleadoresState: StateFlow<GoleadoresState> = _goleadoresState.asStateFlow()
 
-    fun cargarGoleadores(competition: String = "PL") { // Agregar parámetro competition
+    fun cargarGoleadores(competition: String = "PL") {
         viewModelScope.launch {
             _goleadoresState.value = GoleadoresState.Loading
             try {
-                val response = repository.obtenerGoleadores(competition) // Pasar competition
+                val response = repository.obtenerGoleadores(competition)
                 val goleadoresConvertidos = convertirScorersAGoleadores(response.scorers)
                 _goleadoresState.value = GoleadoresState.Success(goleadoresConvertidos)
             } catch (e: Exception) {

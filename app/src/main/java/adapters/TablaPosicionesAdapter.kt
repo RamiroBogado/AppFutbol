@@ -14,9 +14,11 @@ class TablaPosicionesAdapter(
 
     // Método para actualizar los datos
     fun actualizarEquipos(nuevosEquipos: List<EquipoPosicion>) {
+        val oldSize = equipos.size
         equipos.clear()
+        notifyItemRangeRemoved(0, oldSize)
         equipos.addAll(nuevosEquipos)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, nuevosEquipos.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EquipoViewHolder {

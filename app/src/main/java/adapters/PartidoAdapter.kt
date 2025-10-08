@@ -12,11 +12,13 @@ class PartidoAdapter(
     private var partidos: MutableList<Partido>,
 ) : RecyclerView.Adapter<PartidoAdapter.PartidoViewHolder>() {
 
-    // Método para actualizar los datos
+    //Método para actualizar los datos
     fun actualizarPartidos(nuevosPartidos: MutableList<Partido>) {
+        val oldSize = partidos.size
         partidos.clear()
+        notifyItemRangeRemoved(0, oldSize)
         partidos.addAll(nuevosPartidos)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0, nuevosPartidos.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartidoViewHolder {

@@ -17,12 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.example.appfutbol.adapters.PartidoAdapter
-import com.example.appfutbol.dtos.Match
-import com.example.appfutbol.models.Partido
 import com.example.appfutbol.viewmodels.PartidosViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class PartidosRecientesActivity : AppCompatActivity() {
     private lateinit var rvPartidos: RecyclerView
@@ -32,12 +28,12 @@ class PartidosRecientesActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private val viewModel: PartidosViewModel by viewModels()
 
-    private var currentCompetition: String = "PL" // Por defecto Premier League
+    private var currentCompetition: String = "PL"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_partidos_recientes)
+        setContentView(R.layout.activity_partidos)
 
         currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
@@ -67,7 +63,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
     private fun setUpToolBar() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = resources.getString(R.string.titulo)
+        supportActionBar!!.title = intent.getStringExtra("NOMBRE")
     }
 
     private fun setupRecyclerView() {
@@ -97,7 +93,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
                     is PartidosViewModel.PartidosState.Success -> {
                         progressBar.visibility = android.view.View.GONE
                         rvPartidos.visibility = android.view.View.VISIBLE
-                        val partidosConvertidos = convertirMatchesAPartidos(state.partidos)
+                        val partidosConvertidos = viewModel.convertirMatchesAPartidos(state.partidos)
                         partidoAdapter.actualizarPartidos(partidosConvertidos)
                     }
                     is PartidosViewModel.PartidosState.Error -> {
@@ -108,52 +104,6 @@ class PartidosRecientesActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    // Función para convertir Match (DTO) a Partido
-    private fun convertirMatchesAPartidos(matches: List<Match>): MutableList<Partido> {
-        return matches.map { match ->
-            Partido(
-                id = match.id,
-                fecha = formatearFecha(match.utcDate),
-                hora = formatearHora(match.utcDate),
-                equipoLocal = match.homeTeam.name,
-                equipoVisitante = match.awayTeam.name,
-                resultado = formatearResultado(match.score.fullTime)
-            )
-        }.toMutableList()
-    }
-
-    private fun formatearFecha(utcDate: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
-            val date = inputFormat.parse(utcDate)
-
-            date?.let { outputFormat.format(it) } ?: "Fecha no disponible"
-        } catch (e: Exception) {
-            "Fecha no disponible"
-        }
-    }
-
-    private fun formatearHora(utcDate: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val date = inputFormat.parse(utcDate)
-
-            date?.let { outputFormat.format(it) } ?: "Hora no disponible"
-        } catch (e: Exception) {
-            "Hora no disponible"
-        }
-    }
-
-    private fun formatearResultado(fullTime: com.example.appfutbol.dtos.FullTimeScore?): String {
-        return if (fullTime?.home != null && fullTime.away != null) {
-            "${fullTime.home} - ${fullTime.away}"
-        } else {
-            "VS"
         }
     }
 

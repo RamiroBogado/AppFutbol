@@ -65,7 +65,7 @@ class TablaPosicionesActivity : AppCompatActivity() {
     private fun setUpToolBar() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Tabla de Posiciones"
+        supportActionBar!!.title = intent.getStringExtra("NOMBRE")
     }
 
     private fun setupRecyclerView() {

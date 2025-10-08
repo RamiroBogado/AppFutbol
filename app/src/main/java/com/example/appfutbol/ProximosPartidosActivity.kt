@@ -2,10 +2,10 @@ package com.example.appfutbol
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -17,14 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.example.appfutbol.adapters.PartidoAdapter
-import com.example.appfutbol.models.Partido
 import com.example.appfutbol.viewmodels.PartidosViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 class ProximosPartidosActivity : AppCompatActivity() {
     private lateinit var rvPartidos: RecyclerView
+    private lateinit var tvTitulo: TextView
     private lateinit var partidoAdapter: PartidoAdapter
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
@@ -36,7 +35,7 @@ class ProximosPartidosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_partidos_recientes) // Mismo layout
+        setContentView(R.layout.activity_partidos) // Mismo layout
 
         // Recibir la competencia seleccionada
         currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
@@ -63,12 +62,15 @@ class ProximosPartidosActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         progressBar = findViewById(R.id.progressBar)
 
+        tvTitulo = findViewById(R.id.tvTitulo)
+        // Cambio el título
+        tvTitulo.text = getString(R.string.proximos_partidos)
     }
 
     private fun setUpToolBar() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Próximos Partidos" // Cambiar título
+        supportActionBar!!.title = intent.getStringExtra("NOMBRE")
     }
 
     private fun setupRecyclerView() {
@@ -97,7 +99,7 @@ class ProximosPartidosActivity : AppCompatActivity() {
                         progressBar.visibility = android.view.View.GONE
                         rvPartidos.visibility = android.view.View.VISIBLE
 
-                        val partidosConvertidos = convertirMatchesAPartidos(state.partidos)
+                        val partidosConvertidos = viewModel.convertirMatchesAPartidos(state.partidos)
                         partidoAdapter.actualizarPartidos(partidosConvertidos)
 
                     }
@@ -110,47 +112,6 @@ class ProximosPartidosActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    // Función para convertir Match (DTO) a Partido
-    private fun convertirMatchesAPartidos(matches: List<com.example.appfutbol.dtos.Match>): MutableList<Partido> {
-        return matches.map { match ->
-            Partido(
-                id = match.id,
-                fecha = formatearFecha(match.utcDate),
-                hora = formatearHora(match.utcDate),
-                equipoLocal = match.homeTeam.name,
-                equipoVisitante = match.awayTeam.name,
-                resultado = " - "
-            )
-        }.toMutableList()
-    }
-    
-    private fun formatearFecha(utcDate: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
-            val date = inputFormat.parse(utcDate)
-            date?.let { outputFormat.format(it) } ?: "Fecha no disponible"
-        } catch (e: Exception) {
-            "Fecha no disponible"
-        }
-    }
-
-    private fun formatearHora(utcDate: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val date = inputFormat.parse(utcDate)
-            date?.let { outputFormat.format(it) } ?: "Hora no disponible"
-        } catch (e: Exception) {
-            "Hora no disponible"
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

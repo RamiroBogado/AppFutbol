@@ -13,12 +13,12 @@ class PartidosRepository {
 
     suspend fun obtenerPartidosRecientes(competition: String = "PL"): PartidosDTO {
         val jornadaActual = obtenerJornadaActual(competition)
-        return apiService.getPartidos(competition, jornadaActual)
+        return apiService.getPartidos(competition, jornadaActual-1)
     }
 
     suspend fun obtenerProximosPartidos(competition: String = "PL"): PartidosDTO {
         val jornadaActual = obtenerJornadaActual(competition)
-        return apiService.getPartidos(competition, jornadaActual+1)
+        return apiService.getPartidos(competition, jornadaActual)
     }
 
 

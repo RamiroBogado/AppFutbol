@@ -24,10 +24,6 @@
         </activity>
 
         <activity
-            android:name=".DetallePartidoActivity"
-            android:exported="false" />
-
-        <activity
             android:name=".LigasActivity"
             android:exported="false" />
 
@@ -39,19 +35,24 @@
             android:name=".LoginActivity"
             android:exported="false" />
 
-        <activity android:name=".RegistroActivity"
+        <activity
+            android:name=".RegistroActivity"
             android:exported="false"/>
 
-        <activity android:name=".PartidosRecientesActivity"
+        <activity
+            android:name=".PartidosRecientesActivity"
             android:exported="false"/>
 
-        <activity android:name=".GoleadoresActivity"
+        <activity
+            android:name=".GoleadoresActivity"
             android:exported="false" />
 
-        <activity android:name=".TablaPosicionesActivity"
+        <activity
+            android:name=".TablaPosicionesActivity"
             android:exported="false" />
 
-        <activity android:name=".ProximosPartidosActivity"
+        <activity
+            android:name=".ProximosPartidosActivity"
             android:exported="false" />
 
     </application>
