@@ -125,7 +125,10 @@
             android:backgroundTint="@android:color/black"
             android:text="Volver"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="12sp"
+            android:drawableLeft="@android:drawable/ic_media_previous"
+            android:drawableTint="@android:color/white" />
+
 
         <!-- Botón Continuar -->
         <Button
@@ -136,7 +139,9 @@
             android:backgroundTint="@android:color/black"
             android:text="Continuar"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="12sp"
+            android:drawableRight="@android:drawable/ic_media_next"
+            android:drawableTint="@android:color/white" />
     </LinearLayout>
 
 </LinearLayout>

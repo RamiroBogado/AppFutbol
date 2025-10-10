@@ -18,14 +18,14 @@ class BienvenidaFragment : Fragment(R.layout.fragment_bienvenida) {
 
         btnIniciar.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, LoginFragment())
+                .replace(R.id.fragment_container, LoginFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
         btnRegistro.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, RegistroFragment())
+                .replace(R.id.fragment_container, RegistroFragment())
                 .addToBackStack(null)
                 .commit()
         }

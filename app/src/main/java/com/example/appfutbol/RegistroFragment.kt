@@ -58,7 +58,7 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
         Toast.makeText(requireContext(), "Usuario $usuario registrado", Toast.LENGTH_SHORT).show()
         guardarUsuario(usuario)
 
-        val intent = Intent(requireContext(), LoginActivity::class.java)
+        val intent = Intent(requireContext(), LoginFragment::class.java)
         startActivity(intent)
     }
 
