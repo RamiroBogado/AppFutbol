@@ -47,6 +47,11 @@ class LoginActivity : AppCompatActivity() {
         crearCanalNotificacion()
         pedirPermisoNotificaciones()
         cargarUsuarioGuardado()
+
+        // Inicializar base de datos
+        db = AppDatabase.getDatabase(this)
+        usuarioDao = db.usuarioDao()
+
         setupButtonListener()
     }
 

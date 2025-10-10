@@ -92,7 +92,9 @@
             android:layout_marginEnd="10dp"
             android:backgroundTint="@android:color/black"
             android:text="Volver"
-            android:textSize="18sp" />
+            android:textSize="14sp"
+            android:drawableLeft="@android:drawable/ic_media_previous"
+            android:drawableTint="@android:color/white"/>
 
         <!-- Botón Continuar -->
         <Button
@@ -101,8 +103,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:backgroundTint="@android:color/black"
-            android:text="Continuar"
-            android:textSize="18sp" />
+            android:text="continuar"
+            android:textSize="14sp"
+            android:drawableRight="@android:drawable/ic_media_next"
+            android:drawableTint="@android:color/white"/>
     </LinearLayout>
 
 </LinearLayout>
