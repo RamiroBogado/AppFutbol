@@ -26,7 +26,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         lateinit var btnContinuar: Button
         lateinit var btnVolver: Button
         lateinit var sharedPreferences: SharedPreferences
-        val CHANNEL_ID = "canal_recordar_usuario"
+
+        val cannel_id = "canal_recordar_usuario"
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
@@ -131,7 +132,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         private fun crearCanalNotificacion() {
             val channel = NotificationChannelCompat.Builder(
-                CHANNEL_ID,
+                cannel_id,
                 android.app.NotificationManager.IMPORTANCE_DEFAULT
             ).setName("Recordar Usuario")
                 .setDescription("Notificaciones de recordar usuario")
@@ -142,7 +143,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
         private fun mostrarNotificacion() {
-            val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+            val notification = NotificationCompat.Builder(requireContext(), cannel_id)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Usuario recordado")
                 .setContentText("Tus datos serán recordados para el próximo inicio de sesión.")
