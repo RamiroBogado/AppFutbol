@@ -13,22 +13,25 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 
 class ListaActivity : AppCompatActivity() {
-
-    // Botones de opciones
     lateinit var btnPartidosRecientes: LinearLayout
     lateinit var btnProximosPartidos: LinearLayout
     lateinit var btnTabla: LinearLayout
     lateinit var btnGoleadores: LinearLayout
-    // Botón Volver
+
     lateinit var btnVolver: Button
-    //toolbar
+
     lateinit var toolbar : Toolbar
+    private var currentCompetition: String = "PL"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_lista) // Asegúrate de que el nombre del layout coincida
+        setContentView(R.layout.activity_lista)
+
+        // Recibir la competencia seleccionada
+        currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.lista)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -45,7 +48,7 @@ class ListaActivity : AppCompatActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = resources.getString(R.string.titulo)
+        supportActionBar!!.title = intent.getStringExtra("NOMBRE")
 
     }
     private fun initViews() {
@@ -61,28 +64,42 @@ class ListaActivity : AppCompatActivity() {
     }
     private fun setupButtonListeners() {
 
+         val nombre : String? = intent.getStringExtra("NOMBRE")
+
         btnPartidosRecientes.setOnClickListener {
             // Navegar a Partidos Recientes
-            val intent = Intent(this, PartidosRecientesActivity::class.java)
+            val intent = Intent(this, PartidosRecientesActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+                putExtra("NOMBRE", nombre)
+            }
             startActivity(intent)
         }
 
         btnProximosPartidos.setOnClickListener {
             // Navegar a Próximos Partidos
-            // val intent = Intent(this, ProximosPartidosActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, ProximosPartidosActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+                putExtra("NOMBRE", nombre)
+            }
+            startActivity(intent)
         }
 
         btnTabla.setOnClickListener {
             // Navegar a Tabla de Posiciones
-            // val intent = Intent(this, TablaActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, TablaPosicionesActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+                putExtra("NOMBRE", nombre)
+            }
+            startActivity(intent)
         }
 
         btnGoleadores.setOnClickListener {
             // Navegar a Goleadores
-            // val intent = Intent(this, GoleadoresActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, GoleadoresActivity::class.java).apply {
+                putExtra("COMPETITION", currentCompetition)
+                putExtra("NOMBRE", nombre)
+            }
+            startActivity(intent)
         }
 
         btnVolver.setOnClickListener {

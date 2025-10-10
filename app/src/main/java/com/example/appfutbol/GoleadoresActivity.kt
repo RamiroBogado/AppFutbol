@@ -15,26 +15,28 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.lifecycleScope
-import com.example.appfutbol.adapters.PartidoAdapter
-import com.example.appfutbol.viewmodels.PartidosViewModel
+import com.example.appfutbol.adapters.GoleadoresAdapter
+import com.example.appfutbol.viewmodels.GoleadoresViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PartidosRecientesActivity : AppCompatActivity() {
-    private lateinit var rvPartidos: RecyclerView
-    private lateinit var partidoAdapter: PartidoAdapter
+class GoleadoresActivity : AppCompatActivity() {
+
+    private lateinit var rvGoleadores: RecyclerView
+    private lateinit var goleadoresAdapter: GoleadoresAdapter
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
-    private val viewModel: PartidosViewModel by viewModels()
-
-    private var currentCompetition: String = "PL"
+    private val viewModel: GoleadoresViewModel by viewModels()
+    private var currentCompetition : String = "PL"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_partidos)
+        setContentView(R.layout.activity_goleadores)
 
+        // Recibir la competencia seleccionada
         currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -50,11 +52,11 @@ class PartidosRecientesActivity : AppCompatActivity() {
         setupObservers()
 
         // Cargar datos reales con la competencia seleccionada
-        viewModel.cargarPartidosRecientes(currentCompetition)
+        viewModel.cargarGoleadores(currentCompetition)
     }
 
     private fun initViews() {
-        rvPartidos = findViewById(R.id.rvPartidos)
+        rvGoleadores = findViewById(R.id.rvGoleadores)
         btnVolver = findViewById(R.id.btnVolver)
         toolbar = findViewById(R.id.toolbar)
         progressBar = findViewById(R.id.progressBar)
@@ -67,13 +69,10 @@ class PartidosRecientesActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.reverseLayout = true
-        layoutManager.stackFromEnd = true
-
-        rvPartidos.layoutManager = layoutManager
-        partidoAdapter = PartidoAdapter(mutableListOf())
-        rvPartidos.adapter = partidoAdapter
+        rvGoleadores.layoutManager = LinearLayoutManager(this)
+        // Inicializa el adapter con lista vacía
+        goleadoresAdapter = GoleadoresAdapter(mutableListOf())
+        rvGoleadores.adapter = goleadoresAdapter
     }
 
     private fun setupButtonVolver() {
@@ -83,24 +82,23 @@ class PartidosRecientesActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        lifecycleScope.launch {
-            viewModel.partidosState.collect { state ->
+        CoroutineScope(Dispatchers.Main).launch {
+            viewModel.goleadoresState.collect { state ->
                 when (state) {
-                    is PartidosViewModel.PartidosState.Loading -> {
+                    is GoleadoresViewModel.GoleadoresState.Loading -> {
                         progressBar.visibility = android.view.View.VISIBLE
-                        rvPartidos.visibility = android.view.View.GONE
+                        rvGoleadores.visibility = android.view.View.GONE
                     }
-                    is PartidosViewModel.PartidosState.Success -> {
+                    is GoleadoresViewModel.GoleadoresState.Success -> {
                         progressBar.visibility = android.view.View.GONE
-                        rvPartidos.visibility = android.view.View.VISIBLE
-                        val partidosConvertidos = viewModel.convertirMatchesAPartidos(state.partidos)
-                        partidoAdapter.actualizarPartidos(partidosConvertidos)
+                        rvGoleadores.visibility = android.view.View.VISIBLE
+                        goleadoresAdapter.actualizarGoleadores(state.goleadores)
                     }
-                    is PartidosViewModel.PartidosState.Error -> {
+                    is GoleadoresViewModel.GoleadoresState.Error -> {
                         progressBar.visibility = android.view.View.GONE
-                        rvPartidos.visibility = android.view.View.VISIBLE
-                        Toast.makeText(this@PartidosRecientesActivity, "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
-                        partidoAdapter.actualizarPartidos(mutableListOf())
+                        rvGoleadores.visibility = android.view.View.VISIBLE
+                        Toast.makeText(this@GoleadoresActivity, "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
+                        goleadoresAdapter.actualizarGoleadores(mutableListOf())
                     }
                 }
             }
@@ -129,7 +127,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
             }
             R.id.item_listado_lista -> {
                 val intent = Intent(this, ListaActivity::class.java).apply {
-                    putExtra("COMPETITION", currentCompetition) // Pasar la competencia actual
+                    putExtra("COMPETITION", currentCompetition)
                 }
                 startActivity(intent)
                 finish()

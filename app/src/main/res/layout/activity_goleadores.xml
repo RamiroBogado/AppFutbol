@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context=".PartidosRecientesActivity">
+    tools:context=".GoleadoresActivity">
 
     <!-- Toolbar -->
     <include
@@ -28,18 +28,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Partidos Recientes"
+            android:text="Tabla de Goleadores"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- RecyclerView para partidos -->
+        <!-- ProgressBar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <!-- RecyclerView para goleadores -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPartidos"
+            android:id="@+id/rvGoleadores"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="8dp"
-            tools:listitem="@layout/item_partido" />
+            tools:listitem="@layout/item_goleador" />
 
         <!-- Botón Volver -->
         <Button

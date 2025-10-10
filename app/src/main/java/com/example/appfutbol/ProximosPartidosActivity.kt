@@ -2,10 +2,10 @@ package com.example.appfutbol
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -20,21 +20,24 @@ import com.example.appfutbol.adapters.PartidoAdapter
 import com.example.appfutbol.viewmodels.PartidosViewModel
 import kotlinx.coroutines.launch
 
-class PartidosRecientesActivity : AppCompatActivity() {
+
+class ProximosPartidosActivity : AppCompatActivity() {
     private lateinit var rvPartidos: RecyclerView
+    private lateinit var tvTitulo: TextView
     private lateinit var partidoAdapter: PartidoAdapter
     private lateinit var btnVolver: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
     private val viewModel: PartidosViewModel by viewModels()
 
-    private var currentCompetition: String = "PL"
+    private var currentCompetition: String = "PL" // Por defecto Premier League
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_partidos)
+        setContentView(R.layout.activity_partidos) // Mismo layout
 
+        // Recibir la competencia seleccionada
         currentCompetition = intent.getStringExtra("COMPETITION") ?: "PL"
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -50,7 +53,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
         setupObservers()
 
         // Cargar datos reales con la competencia seleccionada
-        viewModel.cargarPartidosRecientes(currentCompetition)
+        viewModel.cargarProximosPartidos(currentCompetition)
     }
 
     private fun initViews() {
@@ -58,6 +61,10 @@ class PartidosRecientesActivity : AppCompatActivity() {
         btnVolver = findViewById(R.id.btnVolver)
         toolbar = findViewById(R.id.toolbar)
         progressBar = findViewById(R.id.progressBar)
+
+        tvTitulo = findViewById(R.id.tvTitulo)
+        // Cambio el título
+        tvTitulo.text = getString(R.string.proximos_partidos)
     }
 
     private fun setUpToolBar() {
@@ -67,13 +74,11 @@ class PartidosRecientesActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.reverseLayout = true
-        layoutManager.stackFromEnd = true
 
-        rvPartidos.layoutManager = layoutManager
+        rvPartidos.layoutManager = LinearLayoutManager(this)
         partidoAdapter = PartidoAdapter(mutableListOf())
         rvPartidos.adapter = partidoAdapter
+
     }
 
     private fun setupButtonVolver() {
@@ -93,23 +98,20 @@ class PartidosRecientesActivity : AppCompatActivity() {
                     is PartidosViewModel.PartidosState.Success -> {
                         progressBar.visibility = android.view.View.GONE
                         rvPartidos.visibility = android.view.View.VISIBLE
+
                         val partidosConvertidos = viewModel.convertirMatchesAPartidos(state.partidos)
                         partidoAdapter.actualizarPartidos(partidosConvertidos)
+
                     }
                     is PartidosViewModel.PartidosState.Error -> {
                         progressBar.visibility = android.view.View.GONE
                         rvPartidos.visibility = android.view.View.VISIBLE
-                        Toast.makeText(this@PartidosRecientesActivity, "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@ProximosPartidosActivity, "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
                         partidoAdapter.actualizarPartidos(mutableListOf())
                     }
                 }
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,7 +131,7 @@ class PartidosRecientesActivity : AppCompatActivity() {
             }
             R.id.item_listado_lista -> {
                 val intent = Intent(this, ListaActivity::class.java).apply {
-                    putExtra("COMPETITION", currentCompetition) // Pasar la competencia actual
+                    putExtra("COMPETITION", currentCompetition)
                 }
                 startActivity(intent)
                 finish()
@@ -138,4 +140,5 @@ class PartidosRecientesActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 }

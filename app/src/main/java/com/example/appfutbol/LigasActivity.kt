@@ -13,13 +13,13 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 
 class LigasActivity : AppCompatActivity() {
-
     lateinit var btnLogo1: LinearLayout
     lateinit var btnLogo2: LinearLayout
     lateinit var btnLogo3: LinearLayout
     lateinit var btnLogo4: LinearLayout
 
     lateinit var btnVolver: Button
+
     lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,31 +59,42 @@ class LigasActivity : AppCompatActivity() {
     private fun setupButtonListeners() {
 
         btnLogo1.setOnClickListener {
-            // Acción para la primera liga (Premier League)
-            val intent = Intent(this, ListaActivity::class.java)
+            // Premier League
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "PL")
+                putExtra("NOMBRE", "Premier League")
+            }
             startActivity(intent)
         }
 
         btnLogo2.setOnClickListener {
-            // Acción para la segunda liga (BundesLiga)
-            // val intent = Intent(this, ListaActivity::class.java)
-            // startActivity(intent)
+            // Bundesliga
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "BL1")
+                putExtra("NOMBRE", "Bundes Liga")
+            }
+            startActivity(intent)
         }
 
         btnLogo3.setOnClickListener {
-            // Acción para la tercera liga (Serie A)
-            // val intent = Intent(this, ListaActivity::class.java)
-            // startActivity(intent)
+            // Serie A
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "SA")
+                putExtra("NOMBRE", "Serie A")
+            }
+            startActivity(intent)
         }
 
         btnLogo4.setOnClickListener {
-            // Acción para la cuarta liga (La Liga)
-            // val intent = Intent(this, ListaActivity::class.java)
-            // startActivity(intent)
+            // La Liga
+            val intent = Intent(this, ListaActivity::class.java).apply {
+                putExtra("COMPETITION", "PD")
+                putExtra("NOMBRE", "La Liga")
+            }
+            startActivity(intent)
         }
 
         btnVolver.setOnClickListener {
-            // Volver a la actividad anterior
             finish()
         }
     }
