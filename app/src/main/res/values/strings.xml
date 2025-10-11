@@ -5,4 +5,5 @@
     <string name="goles_count">%d goles</string>
     <string name="asistencias_count">%d asistencias</string>
     <string name="proximos_partidos">Proximos Partidos</string>
+    <string name="titulo_proximosPartidos">Próximos Partidos</string>
 </resources>

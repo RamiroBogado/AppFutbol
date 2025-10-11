@@ -1,9 +1,10 @@
-package com.example.appfutbol.viewmodels
+package viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appfutbol.models.Goleador
-import com.example.appfutbol.repositories.GoleadoresRepository
+import dtos.Scorer
+import models.Goleador
+import repositories.GoleadoresRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +28,7 @@ class GoleadoresViewModel : ViewModel() {
         }
     }
 
-    private fun convertirScorersAGoleadores(scorers: List<com.example.appfutbol.dtos.Scorer>): List<Goleador> {
+    private fun convertirScorersAGoleadores(scorers: List<Scorer>): List<Goleador> {
         return scorers.map { scorer ->
             Goleador(
                 nombre = scorer.player.name,

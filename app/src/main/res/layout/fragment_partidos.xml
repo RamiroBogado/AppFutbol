@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context=".GoleadoresActivity">
+    tools:context=".PartidosRecientesFragment">
 
     <!-- Toolbar -->
     <include
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Tabla de Goleadores"
+            android:text="Partidos Recientes"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -40,14 +40,14 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <!-- RecyclerView para goleadores -->
+        <!-- RecyclerView para partidos -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGoleadores"
+            android:id="@+id/rvPartidos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="8dp"
-            tools:listitem="@layout/item_goleador" />
+            tools:listitem="@layout/item_partido" />
 
         <!-- Botón Volver -->
         <Button

@@ -1,9 +1,10 @@
-package com.example.appfutbol.viewmodels
+package viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appfutbol.models.EquipoPosicion
-import com.example.appfutbol.repositories.TablaPosicionesRepository
+import dtos.Standing
+import models.EquipoPosicion
+import repositories.TablaPosicionesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +29,7 @@ class TablaPosicionesViewModel : ViewModel() {
         }
     }
 
-    private fun convertirStandingsAEquipos(standings: List<com.example.appfutbol.dtos.Standing>): List<EquipoPosicion> {
+    private fun convertirStandingsAEquipos(standings: List<Standing>): List<EquipoPosicion> {
         return standings.firstOrNull()?.table?.map { teamStanding ->
             EquipoPosicion(
                 posicion = teamStanding.position,

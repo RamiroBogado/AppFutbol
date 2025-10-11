@@ -1,6 +1,5 @@
 package com.example.appfutbol
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -8,6 +7,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.content.edit
+import dataBase.AppDatabase
+import dataBase.Usuario
+import dataBase.UsuarioDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegistroFragment : Fragment(R.layout.fragment_registro) {
 
@@ -17,14 +22,19 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
     private lateinit var btnContinuar: Button
     private lateinit var btnVolver: Button
 
+    // Base de datos
+    private lateinit var db: AppDatabase
+    private lateinit var usuarioDao: UsuarioDao
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        etUsuario = view.findViewById(R.id.etUsuario)
-        etContra = view.findViewById(R.id.etContra)
-        etRepetirContra = view.findViewById(R.id.etRepetirContra)
-        btnContinuar = view.findViewById(R.id.btnContinuar)
-        btnVolver = view.findViewById(R.id.btnVolver)
+        // Inicializar views
+        initViews(view)
+
+        // Inicializar base de datos
+        db = AppDatabase.getDatabase(requireContext())
+        usuarioDao = db.usuarioDao()
 
         setupButtonListener()
     }
@@ -37,6 +47,15 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
         btnVolver.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+    }
+
+    private fun initViews(view: View) {
+
+        etUsuario = view.findViewById(R.id.etUsuario)
+        etContra = view.findViewById(R.id.etContra)
+        etRepetirContra = view.findViewById(R.id.etRepetirContra)
+        btnContinuar = view.findViewById(R.id.btnContinuar)
+        btnVolver = view.findViewById(R.id.btnVolver)
     }
 
     private fun validarCampos(): Boolean {
@@ -55,11 +74,29 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
 
     private fun registrarUsuario() {
         val usuario = etUsuario.text.toString().trim()
-        Toast.makeText(requireContext(), "Usuario $usuario registrado", Toast.LENGTH_SHORT).show()
-        guardarUsuario(usuario)
+        val contra = etContra.text.toString().trim()
 
-        val intent = Intent(requireContext(), LoginFragment::class.java)
-        startActivity(intent)
+        // Usar corrutinas para la operación de base de datos
+        CoroutineScope(Dispatchers.Main).launch {
+            // Verificar si el usuario ya existe
+            val usuarioExistente = usuarioDao.getByUsuario(usuario)
+
+            if (usuarioExistente != null) {
+                Toast.makeText(requireContext(), "El usuario ya existe", Toast.LENGTH_SHORT).show()
+            } else {
+                // Crear nuevo usuario
+                val nuevoUsuario = Usuario(usuario = usuario, pass = contra)
+                usuarioDao.insert(nuevoUsuario)
+
+                Toast.makeText(requireContext(), "Usuario $usuario registrado", Toast.LENGTH_SHORT).show()
+                guardarUsuario(usuario)
+
+                // Navegar a LoginFragment
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, LoginFragment())
+                    .commit()
+            }
+        }
     }
 
     private fun guardarUsuario(usuario: String) {

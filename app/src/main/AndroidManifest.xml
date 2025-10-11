@@ -24,38 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".LigasActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ListaActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".RegistroActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".PartidosRecientesActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".GoleadoresActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".TablaPosicionesActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ProximosPartidosActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>

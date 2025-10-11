@@ -1,4 +1,4 @@
-package com.example.appfutbol.dtos
+package dtos
 
 import com.squareup.moshi.JsonClass
 

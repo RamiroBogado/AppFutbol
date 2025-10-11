@@ -1,4 +1,4 @@
-package com.example.appfutbol
+package dataBase
 
 import android.content.Context
 import androidx.room.Database

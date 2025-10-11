@@ -1,9 +1,6 @@
-package com.example.appfutbol.endpoints
+package endpoints
 
-import com.example.appfutbol.dtos.CompetenciaDTO
-import com.example.appfutbol.dtos.GoleadoresDTO
-import com.example.appfutbol.dtos.PartidosDTO
-import com.example.appfutbol.dtos.TablaPosicionesDTO
+import dtos.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

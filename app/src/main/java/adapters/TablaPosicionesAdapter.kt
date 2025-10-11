@@ -1,4 +1,4 @@
-package com.example.appfutbol.adapters
+package adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appfutbol.R
-import com.example.appfutbol.models.EquipoPosicion
+import models.EquipoPosicion
 
 class TablaPosicionesAdapter(
     private var equipos: MutableList<EquipoPosicion>
