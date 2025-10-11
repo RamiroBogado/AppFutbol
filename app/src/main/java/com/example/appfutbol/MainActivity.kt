@@ -11,9 +11,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main) // Usa activity_main con el contenedor de fragments
+        setContentView(R.layout.activity_main) // activity_main con el contenedor de fragments
 
-        // Aplicar edge-to-edge al contenedor de fragments
+        // Edge-to-edge al contenedor de fragments
         val fragmentContainer = findViewById<android.view.View>(R.id.fragment_container)
         ViewCompat.setOnApplyWindowInsetsListener(fragmentContainer) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Cargar el BienvenidaFragment al inicio solo si no hay estado guardado
+        // Carga el BienvenidaFragment al inicio solo si no hay estado guardado
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, BienvenidaFragment())
