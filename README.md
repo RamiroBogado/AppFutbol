@@ -28,8 +28,8 @@
 - 🧠 [Funcionalidad de **“Recordar Usuario”** utilizando *Shared Preferences*.](https://github.com/RamiroBogado/AppFutbol/commits/GrupoA-Joacoliniers-SharedPreferences)
 - 🔄 [Implementación de la **lógica del Login**](https://github.com/RamiroBogado/AppFutbol/commits/GrupoA-Joacoliniers-LogicaLogin)  
 - ➕ [Implementación de la **lógica del Registro de personas**](https://github.com/RamiroBogado/AppFutbol/commits/GrupoA-JoacoLiniers-LogicaRegistro)  
-- 🧩 [Uso de **Fragmentos** en las pantallas.]()  
-- 🔔 [**Notificación** al activar la opción *Recordar Usuario*.]() 
+- 🧩 [Uso de **Fragmentos** en las pantallas.](https://github.com/RamiroBogado/AppFutbol/commits/GrupoA-Joacoliniers-Fragments/)  
+- 🔔 [**Notificación** al activar la opción *Recordar Usuario*.](https://github.com/RamiroBogado/AppFutbol/commits/GrupoA-Joacoliniers-Notificacion/) 
 
 ---
 
