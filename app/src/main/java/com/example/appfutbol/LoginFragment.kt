@@ -2,7 +2,6 @@ package com.example.appfutbol
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +10,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationChannelCompat
@@ -18,144 +18,170 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
+import dataBase.AppDatabase
+import dataBase.UsuarioDao
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
-        lateinit var etUsuario: EditText
-        lateinit var etContra: EditText
-        lateinit var cbRecordarUsuario: CheckBox
-        lateinit var btnContinuar: Button
-        lateinit var btnVolver: Button
-        lateinit var sharedPreferences: SharedPreferences
 
-        val cannel_id = "canal_recordar_usuario"
+    private lateinit var etUsuario: EditText
+    private lateinit var etContra: EditText
+    private lateinit var cbRecordarUsuario: CheckBox
+    private lateinit var btnContinuar: Button
+    private lateinit var btnVolver: Button
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+    private lateinit var sharedPreferences: SharedPreferences
 
-            // Inicializar views
-            etUsuario = view.findViewById(R.id.etUsuario)
-            etContra = view.findViewById(R.id.etContra)
-            cbRecordarUsuario = view.findViewById(R.id.cbRecordarUsuario)
-            btnContinuar = view.findViewById(R.id.btnContinuar)
-            btnVolver = view.findViewById(R.id.btnVolver)
+    private lateinit var db: AppDatabase
+    private lateinit var usuarioDao: UsuarioDao
 
-            // SharedPreferences
-            sharedPreferences = requireContext().getSharedPreferences("AppFutbolPrefs", AppCompatActivity.MODE_PRIVATE)
+    private val channelId = "canal_recordar_usuario"
 
-            // Notificaciones
-            crearCanalNotificacion()
-            pedirPermisoNotificaciones()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            // Cargar usuario guardado
-            cargarUsuarioGuardado()
+        initViews(view)
 
-            // Listeners
-            setupButtonListener()
+        sharedPreferences = requireContext().getSharedPreferences(
+            "AppFutbolPrefs",
+            AppCompatActivity.MODE_PRIVATE
+        )
+
+        db = AppDatabase.getDatabase(requireContext())
+        usuarioDao = db.usuarioDao()
+
+        crearCanalNotificacion()
+        pedirPermisoNotificaciones()
+
+        cargarUsuarioGuardado()
+
+        setupButtonListener()
+    }
+
+    private fun initViews(view: View) {
+        etUsuario = view.findViewById(R.id.etUsuario)
+        etContra = view.findViewById(R.id.etContra)
+        cbRecordarUsuario = view.findViewById(R.id.cbRecordarUsuario)
+        btnContinuar = view.findViewById(R.id.btnContinuar)
+        btnVolver = view.findViewById(R.id.btnVolver)
+    }
+
+    private fun cargarUsuarioGuardado() {
+        val usuarioGuardado = sharedPreferences.getString("usuario", "")
+        val recordarUsuario = sharedPreferences.getBoolean("recordar_usuario", false)
+
+        if (recordarUsuario && !usuarioGuardado.isNullOrEmpty()) {
+            etUsuario.setText(usuarioGuardado)
+            cbRecordarUsuario.isChecked = true
+        }
+    }
+
+    private fun setupButtonListener() {
+        btnContinuar.setOnClickListener {
+            if (validarCampos()) iniciarSesion()
         }
 
-        private fun cargarUsuarioGuardado() {
-            val usuarioGuardado = sharedPreferences.getString("usuario", "")
-            val recordarUsuario = sharedPreferences.getBoolean("recordar_usuario", false)
+        btnVolver.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+    }
 
-            if (recordarUsuario && !usuarioGuardado.isNullOrEmpty()) {
-                etUsuario.setText(usuarioGuardado)
-                cbRecordarUsuario.isChecked = true
-            }
+    private fun validarCampos(): Boolean {
+        val usuario = etUsuario.text.toString().trim()
+        val contra = etContra.text.toString().trim()
+
+        if (usuario.isEmpty()) {
+            etUsuario.error = "Por favor ingrese su usuario"
+            etUsuario.requestFocus()
+            return false
         }
 
-        private fun setupButtonListener() {
-            btnContinuar.setOnClickListener {
-                if (validarCampos()) {
-                    iniciarSesion()
-                }
-            }
-
-            btnVolver.setOnClickListener {
-                parentFragmentManager.popBackStack() // vuelve al fragmento anterior
-            }
+        if (contra.isEmpty()) {
+            etContra.error = "Por favor ingrese su contraseña"
+            etContra.requestFocus()
+            return false
         }
 
-        private fun validarCampos(): Boolean {
-            val usuario = etUsuario.text.toString().trim()
-            val contra = etContra.text.toString().trim()
+        return true
+    }
 
-            if (usuario.isEmpty()) {
-                etUsuario.error = "Por favor ingrese su usuario"
-                etUsuario.requestFocus()
-                return false
-            }
+    private fun iniciarSesion() {
+        val usuario = etUsuario.text.toString().trim()
+        val contra = etContra.text.toString().trim()
+        val recordarUsuario = cbRecordarUsuario.isChecked
 
-            if (contra.isEmpty()) {
-                etContra.error = "Por favor ingrese su contraseña"
-                etContra.requestFocus()
-                return false
-            }
+        val usuarioExistente = usuarioDao.getByUsuario(usuario)
 
-            return true
-        }
-
-        private fun iniciarSesion() {
-            val usuario = etUsuario.text.toString().trim()
-            val contra = etContra.text.toString().trim()
-            val recordarUsuario = cbRecordarUsuario.isChecked
+        if (usuarioExistente != null && usuarioExistente.pass == contra) {
+            Toast.makeText(requireContext(), "¡Bienvenido $usuario!", Toast.LENGTH_SHORT).show()
 
             guardarPreferenciasUsuario(usuario, recordarUsuario)
 
-            if (autenticarUsuario(usuario, contra)) {
-                Toast.makeText(requireContext(), "¡Bienvenido $usuario!", Toast.LENGTH_SHORT).show()
-
-                // Si querés abrir otra activity (por ejemplo LigasActivity), usá Intent normal:
-                val intent = Intent(requireContext(), LigasActivity::class.java)
-                intent.putExtra("usuario", usuario)
-                startActivity(intent)
-            } else {
-                Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+            val ligasFragment = LigasFragment().apply {
+                arguments = Bundle().apply { putString("usuario", usuario) }
             }
-        }
 
-        private fun autenticarUsuario(usuario: String, contra: String): Boolean {
-            return usuario.isNotEmpty() && contra.length >= 6
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ligasFragment)
+                .commit()
+        } else {
+            Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
         }
+    }
 
-        @SuppressLint("MissingPermission")
-        private fun guardarPreferenciasUsuario(usuario: String, recordarUsuario: Boolean) {
-            sharedPreferences.edit {
-                if (recordarUsuario) {
-                    putString("usuario", usuario)
+
+    @SuppressLint("MissingPermission")
+    private fun guardarPreferenciasUsuario(usuario: String, recordarUsuario: Boolean) {
+        sharedPreferences.edit {
+            if (recordarUsuario) {
+                putString("usuario", usuario)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                    NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+                ) {
                     mostrarNotificacion()
-                } else {
-                    remove("usuario")
                 }
-                putBoolean("recordar_usuario", recordarUsuario)
+            } else {
+                remove("usuario")
             }
+            putBoolean("recordar_usuario", recordarUsuario)
         }
+    }
 
-        private fun crearCanalNotificacion() {
-            val channel = NotificationChannelCompat.Builder(
-                cannel_id,
-                android.app.NotificationManager.IMPORTANCE_DEFAULT
-            ).setName("Recordar Usuario")
-                .setDescription("Notificaciones de recordar usuario")
-                .build()
+    private fun crearCanalNotificacion() {
+        val channel = NotificationChannelCompat.Builder(
+            channelId,
+            android.app.NotificationManager.IMPORTANCE_DEFAULT
+        ).setName("Recordar Usuario")
+            .setDescription("Notificaciones de recordar usuario")
+            .build()
 
-            NotificationManagerCompat.from(requireContext()).createNotificationChannel(channel)
+        NotificationManagerCompat.from(requireContext()).createNotificationChannel(channel)
+    }
+
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    private fun mostrarNotificacion() {
+        val notification = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Usuario recordado")
+            .setContentText("Tus datos serán recordados para el próximo inicio de sesión.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        NotificationManagerCompat.from(requireContext()).notify(1, notification)
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            Toast.makeText(requireContext(), "Permiso de notificaciones concedido", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Los permisos de notificación son necesarios", Toast.LENGTH_SHORT).show()
         }
+    }
 
-        @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-        private fun mostrarNotificacion() {
-            val notification = NotificationCompat.Builder(requireContext(), cannel_id)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Usuario recordado")
-                .setContentText("Tus datos serán recordados para el próximo inicio de sesión.")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .build()
-
-            NotificationManagerCompat.from(requireContext()).notify(1, notification)
+    private fun pedirPermisoNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
-
-        private fun pedirPermisoNotificaciones() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
-            }
-        }
+    }
 }

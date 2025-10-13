@@ -1,6 +1,6 @@
-package com.example.appfutbol.configurations
+package configurations
 
-import com.example.appfutbol.endpoints.FootballApiService
+import endpoints.FootballApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor

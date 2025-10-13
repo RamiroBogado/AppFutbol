@@ -1,7 +1,7 @@
-package com.example.appfutbol.repositories
+package repositories
 
-import com.example.appfutbol.configurations.RetrofitClient
-import com.example.appfutbol.dtos.GoleadoresDTO
+import configurations.RetrofitClient
+import dtos.GoleadoresDTO
 
 class GoleadoresRepository {
     private val apiService = RetrofitClient.getFootballApiService()

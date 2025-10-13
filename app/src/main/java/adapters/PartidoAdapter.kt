@@ -1,6 +1,6 @@
-package com.example.appfutbol.adapters
+package adapters
 
-import com.example.appfutbol.models.Partido
+import models.Partido
 import com.example.appfutbol.R
 import android.view.LayoutInflater
 import android.view.View

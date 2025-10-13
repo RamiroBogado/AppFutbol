@@ -1,10 +1,11 @@
-package com.example.appfutbol.viewmodels
+package viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appfutbol.dtos.Match
-import com.example.appfutbol.models.Partido
-import com.example.appfutbol.repositories.PartidosRepository
+import dtos.FullTimeScore
+import dtos.Match
+import models.Partido
+import repositories.PartidosRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -79,7 +80,7 @@ class PartidosViewModel : ViewModel() {
         }
     }
 
-    private fun formatearResultado(fullTime: com.example.appfutbol.dtos.FullTimeScore?): String {
+    private fun formatearResultado(fullTime: FullTimeScore?): String {
         return if (fullTime?.home != null && fullTime.away != null) {
             "${fullTime.home} - ${fullTime.away}"
         } else {
