@@ -2,6 +2,13 @@
     <!-- Base application theme -->
     <style name="Base.Theme.AppFutbol" parent="Theme.Material3.DayNight.NoActionBar">
 
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="actionOverflowButtonStyle">@style/OverflowIconColor</item>
+
+    </style>
+
+    <style name="OverflowIconColor" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="Theme.AppFutbol" parent="Base.Theme.AppFutbol" />

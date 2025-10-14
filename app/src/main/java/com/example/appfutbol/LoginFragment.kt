@@ -160,7 +160,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     private fun mostrarNotificacion() {
         val notification = NotificationCompat.Builder(requireContext(), channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notificacion)
             .setContentTitle("Usuario recordado")
             .setContentText("Tus datos serán recordados para el próximo inicio de sesión.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
