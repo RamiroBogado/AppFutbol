@@ -10,9 +10,6 @@ import androidx.core.content.edit
 import dataBase.AppDatabase
 import dataBase.Usuario
 import dataBase.UsuarioDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class RegistroFragment : Fragment(R.layout.fragment_registro) {
 
