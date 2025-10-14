@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"
     tools:context=".LigasFragment">
 
     <!-- Toolbar en la parte superior -->
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar" />
+        layout="@layout/layout_toolbar"
+        android:fitsSystemWindows="true" />
 
 
     <!-- Contenedor para el contenido centrado -->
@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="LIGAS"
+            android:textColor="@color/white"
             android:textSize="50sp"
             android:textStyle="bold" />
 
