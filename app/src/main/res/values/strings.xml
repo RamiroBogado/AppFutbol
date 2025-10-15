@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">AppFutbol</string>
-    <string name="titulo">AppFutbolParaTodos</string>
+    <string name="app_name">FPT</string>
+    <string name="titulo">Futbol Para Todos</string>
 
     <string name="goles_count">%d goles</string>
     <string name="asistencias_count">%d asistencias</string>

@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:text="Futbol Para Todos"
+        android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold" />
 
@@ -25,6 +26,7 @@
     <TextView
         android:text="Bienvenido a Futbol Para Todos! En esta app encontrarás toda la información acerca de las grandes ligas y competiciones de Europa! Si sos nuevo te invitamos a registrarte!"
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:layout_marginBottom="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
