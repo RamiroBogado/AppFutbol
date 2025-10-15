@@ -4,6 +4,7 @@ import dtos.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface FootballApiService {
 
@@ -21,4 +22,7 @@ interface FootballApiService {
 
     @GET("{competition}")
     suspend fun getCompetencia(@Path("competition") competition: String): CompetenciaDTO
+
+    @GET
+    suspend fun getDetalleJugador(@Url url: String): PlayerDetailDTO
 }

@@ -31,6 +31,7 @@ class GoleadoresViewModel : ViewModel() {
     private fun convertirScorersAGoleadores(scorers: List<Scorer>): List<Goleador> {
         return scorers.map { scorer ->
             Goleador(
+                id = scorer.player.id,
                 nombre = scorer.player.name,
                 equipo = scorer.team.name,
                 goles = scorer.goals,
