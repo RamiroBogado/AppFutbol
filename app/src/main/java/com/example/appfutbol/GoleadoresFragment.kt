@@ -69,7 +69,10 @@ class GoleadoresFragment : Fragment() {
 
     private fun setupRecyclerView() {
         rvGoleadores.layoutManager = LinearLayoutManager(requireContext())
-        goleadoresAdapter = GoleadoresAdapter(mutableListOf())
+        goleadoresAdapter = GoleadoresAdapter(mutableListOf()) { playerId ->
+            // ✅ NUEVO: Navegar al detalle del jugador cuando se haga click
+            navigateToPlayerDetail(playerId)
+        }
         rvGoleadores.adapter = goleadoresAdapter
     }
 
@@ -103,8 +106,22 @@ class GoleadoresFragment : Fragment() {
         }
     }
 
-    private fun setupMenuProvider() {
+    private fun navigateToPlayerDetail(playerId: Int) {
+        val playerDetailFragment = PlayerDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("PLAYER_ID", playerId)
+                putString("COMPETITION", currentCompetition)
+                putString("NOMBRE", nombreLiga)
+            }
+        }
 
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, playerDetailFragment)
+            .addToBackStack("goleadores")
+            .commit()
+    }
+
+    private fun setupMenuProvider() {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -117,14 +134,12 @@ class GoleadoresFragment : Fragment() {
                         true
                     }
                     R.id.item_listado_ligas -> {
-                        // Navegar a LigasFragment
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, LigasFragment())
                             .commit()
                         true
                     }
                     R.id.item_listado_lista -> {
-                        // Navegar de vuelta a ListaFragment
                         requireActivity().supportFragmentManager.popBackStack()
                         true
                     }

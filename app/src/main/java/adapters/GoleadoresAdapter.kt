@@ -9,7 +9,8 @@ import com.example.appfutbol.R
 import models.Goleador
 
 class GoleadoresAdapter(
-    private var goleadores: MutableList<Goleador>
+    private var goleadores: MutableList<Goleador>,
+    private val onPlayerClick: (Int) -> Unit
 ) : RecyclerView.Adapter<GoleadoresAdapter.GoleadorViewHolder>() {
 
     // Método para actualizar los datos
@@ -32,12 +33,22 @@ class GoleadoresAdapter(
 
     override fun getItemCount() = goleadores.size
 
-    class GoleadorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GoleadorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvPosicion: TextView = itemView.findViewById(R.id.tvPosicion)
         private val tvNombre: TextView = itemView.findViewById(R.id.tvNombre)
         private val tvEquipo: TextView = itemView.findViewById(R.id.tvEquipo)
         private val tvGoles: TextView = itemView.findViewById(R.id.tvGoles)
         private val tvAsistencias: TextView = itemView.findViewById(R.id.tvAsistencias)
+
+        init {
+
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onPlayerClick(goleadores[position].id)
+                }
+            }
+        }
 
         fun bind(goleador: Goleador, posicion: Int) {
             tvPosicion.text = posicion.toString()

@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Tabla de Goleadores"
+            android:text="@string/tabla_de_goleadores"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -48,7 +48,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="8dp"
-            tools:listitem="@layout/item_goleador" />
+            tools:listitem="@layout/item_goleador"
+            tools:ignore="NestedWeights" />
 
         <!-- Botón Volver -->
         <Button
@@ -58,11 +59,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@android:color/black"
-            android:text="Volver"
+            android:text="@string/volver"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:drawableLeft="@android:drawable/ic_media_previous"
-            android:drawableTint="@android:color/white"/>
+            android:drawableTint="@android:color/white"
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 

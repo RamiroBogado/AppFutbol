@@ -70,7 +70,9 @@ class TablaPosicionesFragment : Fragment() {
 
     private fun setupRecyclerView() {
         rvTablaPosiciones.layoutManager = LinearLayoutManager(requireContext())
-        tablaPosicionesAdapter = TablaPosicionesAdapter(mutableListOf())
+        tablaPosicionesAdapter = TablaPosicionesAdapter(mutableListOf()) { teamId ->
+            navigateToTeamDetail(teamId)
+        }
         rvTablaPosiciones.adapter = tablaPosicionesAdapter
     }
 
@@ -104,8 +106,22 @@ class TablaPosicionesFragment : Fragment() {
         }
     }
 
-    private fun setupMenuProvider() {
+    private fun navigateToTeamDetail(teamId: Int) {
+        val teamDetailFragment = TeamDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt("TEAM_ID", teamId)
+                putString("COMPETITION", currentCompetition)
+                putString("NOMBRE", nombreLiga)
+            }
+        }
 
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, teamDetailFragment)
+            .addToBackStack("tabla_posiciones")
+            .commit()
+    }
+
+    private fun setupMenuProvider() {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.main_menu, menu)
@@ -118,14 +134,12 @@ class TablaPosicionesFragment : Fragment() {
                         true
                     }
                     R.id.item_listado_ligas -> {
-                        // Navegar a LigasFragment
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, LigasFragment())
                             .commit()
                         true
                     }
                     R.id.item_listado_lista -> {
-                        // Navegar de vuelta a ListaFragment
                         requireActivity().supportFragmentManager.popBackStack()
                         true
                     }

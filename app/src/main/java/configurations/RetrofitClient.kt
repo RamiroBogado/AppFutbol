@@ -10,7 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    private const val BASE_URL = "https://api.football-data.org/v4/competitions/"
+    private const val BASE_URL = "https://api.football-data.org/v4/"
     private const val API_KEY = "6634b56860b449bd8fd1446d9678b33f"
 
     private val moshi = Moshi.Builder()

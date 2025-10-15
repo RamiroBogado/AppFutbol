@@ -161,10 +161,7 @@ class ListaFragment : Fragment() {
                             .commit()
                         true
                     }
-                    R.id.item_listado_lista -> {
 
-                        true
-                    }
                     else -> false
                 }
             }
