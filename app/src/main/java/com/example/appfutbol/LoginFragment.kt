@@ -112,7 +112,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val usuarioExistente = usuarioDao.getByUsuario(usuario)
 
         if (usuarioExistente != null && usuarioExistente.pass == contra) {
-            Toast.makeText(requireContext(), "¡Bienvenido $usuario!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "¡Te damos la bienbenida $usuario!", Toast.LENGTH_SHORT).show()
 
             guardarPreferenciasUsuario(usuario, recordarUsuario)
 

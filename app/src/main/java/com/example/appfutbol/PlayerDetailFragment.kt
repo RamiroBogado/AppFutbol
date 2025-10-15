@@ -16,6 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import dtos.PlayerDetailDTO
 import kotlinx.coroutines.launch
 import viewmodels.PlayerDetailViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PlayerDetailFragment : Fragment() {
 
@@ -26,9 +28,11 @@ class PlayerDetailFragment : Fragment() {
     // Views para mostrar los datos del jugador
     private lateinit var tvNombre: TextView
     private lateinit var tvNombreCompleto: TextView
+    private lateinit var tvNombreDetalle: TextView
     private lateinit var tvFechaNacimiento: TextView
     private lateinit var tvNacionalidad: TextView
     private lateinit var tvPosicion: TextView
+    private lateinit var tvEquipo: TextView
 
     private val viewModel: PlayerDetailViewModel by viewModels()
     private var playerId: Int = 0
@@ -75,9 +79,11 @@ class PlayerDetailFragment : Fragment() {
         // Inicializar views de datos del jugador
         tvNombre = view.findViewById(R.id.tvNombre)
         tvNombreCompleto = view.findViewById(R.id.tvNombreCompleto)
+        tvNombreDetalle = view.findViewById(R.id.tvNombreDetalle)
         tvFechaNacimiento = view.findViewById(R.id.tvFechaNacimiento)
         tvNacionalidad = view.findViewById(R.id.tvNacionalidad)
         tvPosicion = view.findViewById(R.id.tvPosicion)
+        tvEquipo = view.findViewById(R.id.tvEquipo)
     }
 
     private fun setupToolbar() {
@@ -113,10 +119,49 @@ class PlayerDetailFragment : Fragment() {
 
     private fun mostrarDatosJugador(playerDetail: PlayerDetailDTO) {
         tvNombre.text = playerDetail.name
-        tvNombreCompleto.text = "${playerDetail.firstName} ${playerDetail.lastName}"
-        tvFechaNacimiento.text = playerDetail.dateOfBirth
+
+        val (firstName, lastName) = when {
+            playerDetail.firstName.isEmpty() && playerDetail.lastName.isEmpty() -> {
+                "No disponible" to "No disponible"
+            }
+            playerDetail.firstName.isEmpty() -> {
+
+                val parts = playerDetail.lastName.split(" ")
+                if (parts.size > 1) parts[0] to parts.drop(1).joinToString(" ")
+                else "No disponible" to playerDetail.lastName
+            }
+            playerDetail.lastName.isEmpty() -> {
+
+                val parts = playerDetail.firstName.split(" ")
+                if (parts.size > 1) parts[0] to parts.drop(1).joinToString(" ")
+                else playerDetail.firstName to "No disponible"
+            }
+            else -> {
+                playerDetail.firstName to playerDetail.lastName
+            }
+        }
+
+        tvNombreCompleto.text = firstName
+        tvNombreDetalle.text = lastName
+        tvFechaNacimiento.text = formatearFecha(playerDetail.dateOfBirth)
         tvNacionalidad.text = playerDetail.nationality
         tvPosicion.text = playerDetail.section
+        tvEquipo.text = playerDetail.currentTeam?.name ?: "No disponible"
+    }
+
+    private fun formatearFecha(fechaISO: String): String {
+        return try {
+            val formatoEntrada = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val formatoSalida = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val fecha = formatoEntrada.parse(fechaISO)
+            if (fecha != null) {
+                formatoSalida.format(fecha)
+            } else {
+
+            }
+        } catch (_: Exception) {
+            fechaISO // Si hay error, devuelve la original
+        } as String
     }
 
     private fun setupMenuProvider() {

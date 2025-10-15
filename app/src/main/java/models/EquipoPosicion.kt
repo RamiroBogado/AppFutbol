@@ -1,6 +1,7 @@
 package models
 
 data class EquipoPosicion(
+    val id: Int,
     val posicion: Int,
     val nombreEquipo: String,
     val partidosJugados: Int,

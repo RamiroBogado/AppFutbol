@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,21 +13,29 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import adapters.TablaPosicionesAdapter
-import viewmodels.TablaPosicionesViewModel
+import dtos.TeamDetailDTO
 import kotlinx.coroutines.launch
+import viewmodels.TeamDetailViewModel
 
-class TablaPosicionesFragment : Fragment() {
+class TeamDetailFragment : Fragment() {
 
-    private lateinit var rvTablaPosiciones: RecyclerView
-    private lateinit var tablaPosicionesAdapter: TablaPosicionesAdapter
-    private lateinit var btnVolver: Button
-    private lateinit var progressBar: ProgressBar
     private lateinit var toolbar: Toolbar
+    private lateinit var progressBar: ProgressBar
+    private lateinit var btnVolver: Button
 
-    private val viewModel: TablaPosicionesViewModel by viewModels()
+    // Views para mostrar los datos del equipo
+    private lateinit var tvNombre: TextView
+    private lateinit var tvNombreCorto: TextView
+    private lateinit var tvEstadio: TextView
+    private lateinit var tvDireccion: TextView
+    private lateinit var tvWebsite: TextView
+    private lateinit var tvFundacion: TextView
+    private lateinit var tvColores: TextView
+    private lateinit var tvEntrenador: TextView
+
+    private val viewModel: TeamDetailViewModel by viewModels()
+    private var teamId: Int = 0
+
     private var currentCompetition: String = "PL"
     private var nombreLiga: String? = null
 
@@ -35,46 +44,51 @@ class TablaPosicionesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tabla_posiciones, container, false)
+        return inflater.inflate(R.layout.fragment_team_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Recibir argumentos
         currentCompetition = arguments?.getString("COMPETITION") ?: "PL"
         nombreLiga = arguments?.getString("NOMBRE")
 
+        // Recibir el ID del equipo
+        teamId = arguments?.getInt("TEAM_ID") ?: 0
+
         initViews(view)
         setupToolbar()
-        setupRecyclerView()
         setupButtonVolver()
         setupObservers()
         setupMenuProvider()
 
-        // Cargar datos
-        viewModel.cargarTablaPosiciones(currentCompetition)
+        // Cargar datos del equipo
+        if (teamId != 0) {
+            viewModel.cargarDetalleEquipo(teamId)
+        } else {
+            Toast.makeText(requireContext(), "Error: ID de equipo no válido", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initViews(view: View) {
-        rvTablaPosiciones = view.findViewById(R.id.rvTablaPosiciones)
-        btnVolver = view.findViewById(R.id.btnVolver)
         toolbar = view.findViewById(R.id.toolbar)
         progressBar = view.findViewById(R.id.progressBar)
+        btnVolver = view.findViewById(R.id.btnVolver)
+
+        // Inicializar views de datos del equipo
+        tvNombre = view.findViewById(R.id.tvNombre)
+        tvNombreCorto = view.findViewById(R.id.tvNombreCorto)
+        tvEstadio = view.findViewById(R.id.tvEstadio)
+        tvDireccion = view.findViewById(R.id.tvDireccion)
+        tvWebsite = view.findViewById(R.id.tvWebsite)
+        tvFundacion = view.findViewById(R.id.tvFundacion)
+        tvColores = view.findViewById(R.id.tvColores)
+        tvEntrenador = view.findViewById(R.id.tvEntrenador)
     }
 
     private fun setupToolbar() {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = nombreLiga
-    }
-
-    private fun setupRecyclerView() {
-        rvTablaPosiciones.layoutManager = LinearLayoutManager(requireContext())
-        tablaPosicionesAdapter = TablaPosicionesAdapter(mutableListOf()) { teamId ->
-            // ✅ NUEVO: Navegar al detalle del equipo cuando se haga click
-            navigateToTeamDetail(teamId)
-        }
-        rvTablaPosiciones.adapter = tablaPosicionesAdapter
     }
 
     private fun setupButtonVolver() {
@@ -85,42 +99,39 @@ class TablaPosicionesFragment : Fragment() {
 
     private fun setupObservers() {
         lifecycleScope.launch {
-            viewModel.tablaPosicionesState.collect { state ->
+            viewModel.teamDetailState.collect { state ->
                 when (state) {
-                    is TablaPosicionesViewModel.TablaPosicionesState.Loading -> {
+                    is TeamDetailViewModel.TeamDetailState.Loading -> {
                         progressBar.visibility = View.VISIBLE
-                        rvTablaPosiciones.visibility = View.GONE
                     }
-                    is TablaPosicionesViewModel.TablaPosicionesState.Success -> {
+                    is TeamDetailViewModel.TeamDetailState.Success -> {
                         progressBar.visibility = View.GONE
-                        rvTablaPosiciones.visibility = View.VISIBLE
-                        tablaPosicionesAdapter.actualizarEquipos(state.equipos)
+                        mostrarDatosEquipo(state.teamDetail)
                     }
-                    is TablaPosicionesViewModel.TablaPosicionesState.Error -> {
+                    is TeamDetailViewModel.TeamDetailState.Error -> {
                         progressBar.visibility = View.GONE
-                        rvTablaPosiciones.visibility = View.VISIBLE
-                        Toast.makeText(requireContext(), "Error: ${state.mensaje}", Toast.LENGTH_LONG).show()
-                        tablaPosicionesAdapter.actualizarEquipos(mutableListOf())
+                        Toast.makeText(requireContext(), state.mensaje, Toast.LENGTH_LONG).show()
                     }
                 }
             }
         }
     }
 
-    // ✅ NUEVO: Método para navegar al detalle del equipo
-    private fun navigateToTeamDetail(teamId: Int) {
-        val teamDetailFragment = TeamDetailFragment().apply {
-            arguments = Bundle().apply {
-                putInt("TEAM_ID", teamId)
-                putString("COMPETITION", currentCompetition)
-                putString("NOMBRE", nombreLiga)
-            }
-        }
+    private fun mostrarDatosEquipo(teamDetail: TeamDetailDTO) {
+        tvNombre.text = teamDetail.name
+        tvNombreCorto.text = teamDetail.shortName
+        tvEstadio.text = teamDetail.venue
+        tvDireccion.text = teamDetail.address
+        tvWebsite.text = teamDetail.website
+        tvFundacion.text = teamDetail.founded.toString()
+        tvColores.text = teamDetail.clubColors
 
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, teamDetailFragment)
-            .addToBackStack("tabla_posiciones")
-            .commit()
+        // Mostrar entrenador si está disponible
+        teamDetail.coach?.let { coach ->
+            tvEntrenador.text = "${coach.firstName} ${coach.lastName}"
+        } ?: run {
+            tvEntrenador.text = "No disponible"
+        }
     }
 
     private fun setupMenuProvider() {

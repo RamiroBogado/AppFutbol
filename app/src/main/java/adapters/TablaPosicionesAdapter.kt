@@ -9,7 +9,8 @@ import com.example.appfutbol.R
 import models.EquipoPosicion
 
 class TablaPosicionesAdapter(
-    private var equipos: MutableList<EquipoPosicion>
+    private var equipos: MutableList<EquipoPosicion>,
+    private val onTeamClick: (Int) -> Unit // ✅ NUEVO: Callback que recibe el ID del equipo
 ) : RecyclerView.Adapter<TablaPosicionesAdapter.EquipoViewHolder>() {
 
     // Método para actualizar los datos
@@ -32,7 +33,7 @@ class TablaPosicionesAdapter(
 
     override fun getItemCount() = equipos.size
 
-    class EquipoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class EquipoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvPosicion: TextView = itemView.findViewById(R.id.tvPosicion)
         private val tvEquipo: TextView = itemView.findViewById(R.id.tvEquipo)
         private val tvPJ: TextView = itemView.findViewById(R.id.tvPJ)
@@ -40,6 +41,16 @@ class TablaPosicionesAdapter(
         private val tvE: TextView = itemView.findViewById(R.id.tvE)
         private val tvP: TextView = itemView.findViewById(R.id.tvP)
         private val tvPuntos: TextView = itemView.findViewById(R.id.tvPuntos)
+
+        init {
+            // ✅ NUEVO: Manejar click en el item
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onTeamClick(equipos[position].id) // ✅ Pasar el ID del equipo
+                }
+            }
+        }
 
         fun bind(equipo: EquipoPosicion) {
             tvPosicion.text = equipo.posicion.toString()
