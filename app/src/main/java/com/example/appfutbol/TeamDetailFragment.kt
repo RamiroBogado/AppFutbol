@@ -3,6 +3,7 @@ package com.example.appfutbol
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import dtos.Competition
+import dtos.PlayerSquad
 import dtos.TeamDetailDTO
 import kotlinx.coroutines.launch
 import viewmodels.TeamDetailViewModel
@@ -32,10 +35,12 @@ class TeamDetailFragment : Fragment() {
     private lateinit var tvFundacion: TextView
     private lateinit var tvColores: TextView
     private lateinit var tvEntrenador: TextView
-
+    private lateinit var layoutCompetitions: LinearLayout
+    private lateinit var tvCompetitions: TextView
+    private lateinit var layoutSquad: LinearLayout
+    private lateinit var tvSquad: TextView
     private val viewModel: TeamDetailViewModel by viewModels()
     private var teamId: Int = 0
-
     private var currentCompetition: String = "PL"
     private var nombreLiga: String? = null
 
@@ -84,6 +89,10 @@ class TeamDetailFragment : Fragment() {
         tvFundacion = view.findViewById(R.id.tvFundacion)
         tvColores = view.findViewById(R.id.tvColores)
         tvEntrenador = view.findViewById(R.id.tvEntrenador)
+        layoutCompetitions = view.findViewById(R.id.layoutCompetitions)
+        tvCompetitions = view.findViewById(R.id.tvCompetitions)
+        layoutSquad = view.findViewById(R.id.layoutSquad)
+        tvSquad = view.findViewById(R.id.tvSquad)
     }
 
     private fun setupToolbar() {
@@ -118,6 +127,7 @@ class TeamDetailFragment : Fragment() {
     }
 
     private fun mostrarDatosEquipo(teamDetail: TeamDetailDTO) {
+        // Información básica
         tvNombre.text = teamDetail.name
         tvNombreCorto.text = teamDetail.shortName
         tvEstadio.text = teamDetail.venue
@@ -126,11 +136,50 @@ class TeamDetailFragment : Fragment() {
         tvFundacion.text = teamDetail.founded.toString()
         tvColores.text = teamDetail.clubColors
 
-        // Mostrar entrenador si está disponible
+        // Entrenador
         teamDetail.coach?.let { coach ->
-            tvEntrenador.text = "${coach.firstName} ${coach.lastName}"
+            tvEntrenador.text = coach.name
         } ?: run {
-            tvEntrenador.text = "No disponible"
+            tvEntrenador.text = getString(R.string.no_disponible)
+        }
+
+        mostrarCompeticiones(teamDetail.runningCompetitions)
+
+        mostrarPlantilla(teamDetail.squad)
+    }
+
+    private fun mostrarCompeticiones(competitions: List<Competition>) {
+        if (competitions.isNotEmpty()) {
+            layoutCompetitions.visibility = View.VISIBLE
+            val competicionesText = competitions.joinToString("\n") { competition ->
+                "• ${competition.name} (${competition.code})"
+            }
+            tvCompetitions.text = competicionesText
+        } else {
+            layoutCompetitions.visibility = View.GONE
+        }
+    }
+
+    private fun mostrarPlantilla(squad: List<PlayerSquad>) {
+        if (squad.isNotEmpty()) {
+            layoutSquad.visibility = View.VISIBLE
+
+            // Agrupar jugadores por posición
+            val jugadoresPorPosicion = squad.groupBy { it.position }
+
+            val plantillaText = buildString {
+                jugadoresPorPosicion.forEach { (posicion, jugadores) ->
+                    append("$posicion:\n")
+                    jugadores.forEach { jugador ->
+                        append("  • ${jugador.name} (${jugador.nationality})\n")
+                    }
+                    append("\n")
+                }
+            }
+
+            tvSquad.text = plantillaText.trim()
+        } else {
+            layoutSquad.visibility = View.GONE
         }
     }
 
@@ -153,6 +202,7 @@ class TeamDetailFragment : Fragment() {
                         true
                     }
                     R.id.item_listado_lista -> {
+                        requireActivity().supportFragmentManager.popBackStack()
                         requireActivity().supportFragmentManager.popBackStack()
                         true
                     }

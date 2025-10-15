@@ -71,7 +71,6 @@ class TablaPosicionesFragment : Fragment() {
     private fun setupRecyclerView() {
         rvTablaPosiciones.layoutManager = LinearLayoutManager(requireContext())
         tablaPosicionesAdapter = TablaPosicionesAdapter(mutableListOf()) { teamId ->
-            // ✅ NUEVO: Navegar al detalle del equipo cuando se haga click
             navigateToTeamDetail(teamId)
         }
         rvTablaPosiciones.adapter = tablaPosicionesAdapter
@@ -107,7 +106,6 @@ class TablaPosicionesFragment : Fragment() {
         }
     }
 
-    // ✅ NUEVO: Método para navegar al detalle del equipo
     private fun navigateToTeamDetail(teamId: Int) {
         val teamDetailFragment = TeamDetailFragment().apply {
             arguments = Bundle().apply {

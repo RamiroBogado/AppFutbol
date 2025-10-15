@@ -32,7 +32,7 @@ class TablaPosicionesViewModel : ViewModel() {
     private fun convertirStandingsAEquipos(standings: List<Standing>): List<EquipoPosicion> {
         return standings.firstOrNull()?.table?.map { teamStanding ->
             EquipoPosicion(
-                id = teamStanding.team.id, // ✅ NUEVO: Agregar el ID del equipo
+                id = teamStanding.team.id,
                 posicion = teamStanding.position,
                 nombreEquipo = teamStanding.team.name,
                 partidosJugados = teamStanding.playedGames,

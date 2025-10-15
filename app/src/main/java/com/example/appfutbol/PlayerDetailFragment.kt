@@ -36,7 +36,6 @@ class PlayerDetailFragment : Fragment() {
 
     private val viewModel: PlayerDetailViewModel by viewModels()
     private var playerId: Int = 0
-
     private var currentCompetition: String = "PL"
     private var nombreLiga: String? = null
 
@@ -183,6 +182,7 @@ class PlayerDetailFragment : Fragment() {
                         true
                     }
                     R.id.item_listado_lista -> {
+                        requireActivity().supportFragmentManager.popBackStack()
                         requireActivity().supportFragmentManager.popBackStack()
                         true
                     }

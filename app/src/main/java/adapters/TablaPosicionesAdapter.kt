@@ -10,7 +10,7 @@ import models.EquipoPosicion
 
 class TablaPosicionesAdapter(
     private var equipos: MutableList<EquipoPosicion>,
-    private val onTeamClick: (Int) -> Unit // ✅ NUEVO: Callback que recibe el ID del equipo
+    private val onTeamClick: (Int) -> Unit
 ) : RecyclerView.Adapter<TablaPosicionesAdapter.EquipoViewHolder>() {
 
     // Método para actualizar los datos
@@ -43,11 +43,10 @@ class TablaPosicionesAdapter(
         private val tvPuntos: TextView = itemView.findViewById(R.id.tvPuntos)
 
         init {
-            // ✅ NUEVO: Manejar click en el item
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    onTeamClick(equipos[position].id) // ✅ Pasar el ID del equipo
+                    onTeamClick(equipos[position].id)
                 }
             }
         }

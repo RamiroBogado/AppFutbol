@@ -8,4 +8,5 @@
     <string name="titulo_proximosPartidos">Próximos Partidos</string>
     <string name="tabla_de_goleadores">Tabla de Goleadores</string>
     <string name="volver">Volver</string>
+    <string name="no_disponible">No disponible</string>
 </resources>

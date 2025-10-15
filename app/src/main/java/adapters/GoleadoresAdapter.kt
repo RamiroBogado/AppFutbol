@@ -10,7 +10,7 @@ import models.Goleador
 
 class GoleadoresAdapter(
     private var goleadores: MutableList<Goleador>,
-    private val onPlayerClick: (Int) -> Unit // ✅ NUEVO: Callback que recibe el ID del jugador
+    private val onPlayerClick: (Int) -> Unit
 ) : RecyclerView.Adapter<GoleadoresAdapter.GoleadorViewHolder>() {
 
     // Método para actualizar los datos
@@ -41,11 +41,11 @@ class GoleadoresAdapter(
         private val tvAsistencias: TextView = itemView.findViewById(R.id.tvAsistencias)
 
         init {
-            // ✅ NUEVO: Manejar click en el item
+
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    onPlayerClick(goleadores[position].id) // ✅ Pasar el ID del jugador
+                    onPlayerClick(goleadores[position].id)
                 }
             }
         }
