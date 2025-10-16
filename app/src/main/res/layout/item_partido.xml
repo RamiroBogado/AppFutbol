@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/item_background"
+    android:elevation="4dp">
 
     <!-- Fecha y Hora centradas -->
     <LinearLayout
@@ -42,7 +44,7 @@
         android:gravity="center"
         android:layout_marginBottom="8dp">
 
-        <!-- Equipo Local (alineado a la derecha) -->
+        <!-- Equipo Local -->
         <TextView
             android:id="@+id/tv_equipo_local"
             android:layout_width="0dp"
@@ -67,7 +69,7 @@
             android:textColor="#999999"
             android:paddingHorizontal="4dp"/>
 
-        <!-- Equipo Visitante (alineado a la izquierda) -->
+        <!-- Equipo Visitante -->
         <TextView
             android:id="@+id/tv_equipo_visitante"
             android:layout_width="0dp"
@@ -100,6 +102,7 @@
             android:text="0 - 3"
             android:background="#FFEBEE"
             android:paddingHorizontal="20dp"
-            android:paddingVertical="8dp"/>
+            android:paddingVertical="8dp"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 </LinearLayout>
