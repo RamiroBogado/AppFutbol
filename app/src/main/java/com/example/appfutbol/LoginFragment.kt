@@ -20,6 +20,11 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import dataBase.AppDatabase
 import dataBase.UsuarioDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -109,24 +114,29 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val contra = etContra.text.toString().trim()
         val recordarUsuario = cbRecordarUsuario.isChecked
 
-        val usuarioExistente = usuarioDao.getByUsuario(usuario)
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioExistente = usuarioDao.getByUsuario(usuario)
 
-        if (usuarioExistente != null && usuarioExistente.pass == contra) {
-            Toast.makeText(requireContext(), "¡Te damos la bienbenida $usuario!", Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                if (usuarioExistente != null && usuarioExistente.pass == contra) {
+                    Toast.makeText(requireContext(), "¡Te damos la bienvenida $usuario!", Toast.LENGTH_SHORT).show()
 
-            guardarPreferenciasUsuario(usuario, recordarUsuario)
+                    guardarPreferenciasUsuario(usuario, recordarUsuario)
 
-            val ligasFragment = LigasFragment().apply {
-                arguments = Bundle().apply { putString("usuario", usuario) }
+                    val ligasFragment = LigasFragment().apply {
+                        arguments = Bundle().apply { putString("usuario", usuario) }
+                    }
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, ligasFragment)
+                        .commit()
+                } else {
+                    Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                }
             }
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ligasFragment)
-                .commit()
-        } else {
-            Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
     @SuppressLint("MissingPermission")

@@ -10,6 +10,11 @@ import androidx.core.content.edit
 import dataBase.AppDatabase
 import dataBase.Usuario
 import dataBase.UsuarioDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RegistroFragment : Fragment(R.layout.fragment_registro) {
 
@@ -69,20 +74,32 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
         val usuario = etUsuario.text.toString().trim()
         val contra = etContra.text.toString().trim()
 
-        val usuarioExistente = usuarioDao.getByUsuario(usuario)
+        if (usuario.isEmpty() || contra.isEmpty()) {
+            Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        if (usuarioExistente != null) {
-            Toast.makeText(requireContext(), "El usuario ya existe", Toast.LENGTH_SHORT).show()
-        } else {
-            val nuevoUsuario = Usuario(usuario = usuario, pass = contra)
-            usuarioDao.insert(nuevoUsuario)
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioExistente = usuarioDao.getByUsuario(usuario)
 
-            Toast.makeText(requireContext(), "Usuario $usuario registrado", Toast.LENGTH_SHORT).show()
-            guardarUsuario(usuario)
+            withContext(Dispatchers.Main) {
+                if (usuarioExistente != null) {
+                    Toast.makeText(requireContext(), "El usuario ya existe", Toast.LENGTH_SHORT).show()
+                } else {
+                    val nuevoUsuario = Usuario(usuario = usuario, pass = contra)
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, LoginFragment())
-                .commit()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        usuarioDao.insert(nuevoUsuario)
+                    }
+
+                    Toast.makeText(requireContext(), "Usuario $usuario registrado", Toast.LENGTH_SHORT).show()
+                    guardarUsuario(usuario)
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, LoginFragment())
+                        .commit()
+                }
+            }
         }
     }
 
