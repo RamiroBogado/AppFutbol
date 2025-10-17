@@ -1,6 +1,5 @@
 package adapters
 
-import android.util.Log
 import models.Partido
 import com.example.appfutbol.R
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ class PartidoAdapter(
     //Método para actualizar los datos
     fun actualizarPartidos(nuevosPartidos: MutableList<Partido>) {
         val oldSize = getItemCount()
-        Log.d("ADAPTER_DEBUG", "getItemCount() = $oldSize")
         partidos.clear()
         notifyItemRangeRemoved(0, oldSize)
         partidos.addAll(nuevosPartidos)

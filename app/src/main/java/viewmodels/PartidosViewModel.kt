@@ -1,6 +1,5 @@
 package viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dtos.FullTimeScore
@@ -25,7 +24,6 @@ class PartidosViewModel : ViewModel() {
             _partidosState.value = PartidosState.Loading
             try {
                 val response = repository.obtenerPartidosRecientes(competition)
-                Log.d("lista_DEBUG", "$response")
                 _partidosState.value = PartidosState.Success(response.matches)
             } catch (e: Exception) {
                 _partidosState.value = PartidosState.Error(e.message ?: "Error desconocido")
