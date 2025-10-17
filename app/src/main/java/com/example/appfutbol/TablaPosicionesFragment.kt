@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import adapters.TablaPosicionesAdapter
+import androidx.fragment.app.FragmentManager
 import viewmodels.TablaPosicionesViewModel
 import kotlinx.coroutines.launch
 
@@ -130,12 +131,17 @@ class TablaPosicionesFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.item_logout -> {
-                        requireActivity().finish()
+                        requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, BienvenidaFragment())
+                            .disallowAddToBackStack()
+                            .commit()
                         true
                     }
                     R.id.item_listado_ligas -> {
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, LigasFragment())
+                            .disallowAddToBackStack()
                             .commit()
                         true
                     }

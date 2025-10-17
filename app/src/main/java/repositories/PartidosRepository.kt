@@ -9,6 +9,7 @@ class PartidosRepository {
     suspend fun obtenerJornadaActual(competition: String = "PL"): Int {
         val response = apiService.getCompetencia(competition)
         return response.currentSeason.currentMatchday
+
     }
 
     suspend fun obtenerPartidosRecientes(competition: String = "PL"): PartidosDTO {

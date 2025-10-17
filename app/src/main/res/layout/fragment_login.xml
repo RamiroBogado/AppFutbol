@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:padding="16dp"
     tools:context=".LoginFragment">
 
     <!-- Encabezado -->
@@ -24,10 +25,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:text="Iniciar Sesion"
+        android:text="Iniciar Sesión"
         android:textColor="@color/white"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:textStyle="bold"/>
 
+    <!-- Contenedor de campos -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#183426"
+        android:padding="24dp"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:gravity="center_horizontal"
+        android:clipToPadding="false">
     <!-- Campo de usuario -->
     <TextView
         android:id="@+id/tvUsuario"
@@ -42,7 +55,7 @@
         android:id="@+id/etUsuario"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"
+        android:layout_marginTop="4dp"
         android:background="@android:drawable/editbox_background_normal"
         android:backgroundTint="@color/cardview_dark_background"
         android:hint="Usuario"
@@ -64,6 +77,7 @@
         android:id="@+id/etContra"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="@android:drawable/editbox_background_normal"
         android:backgroundTint="@color/cardview_dark_background"
         android:hint="Contraseña"
@@ -78,7 +92,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Recordar Usuario"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white" />
+    </LinearLayout>
 
     <!-- Contenedor para botones -->
     <LinearLayout
@@ -88,7 +103,6 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <!-- Botón Volver -->
         <Button
             android:id="@+id/btnVolver"
             android:layout_width="150dp"
@@ -96,11 +110,11 @@
             android:layout_marginEnd="10dp"
             android:backgroundTint="@android:color/black"
             android:text="Volver"
+            android:textColor="@android:color/white"
             android:textSize="12sp"
             android:drawableLeft="@android:drawable/ic_media_previous"
             android:drawableTint="@android:color/white" />
 
-        <!-- Botón Continuar -->
         <Button
             android:id="@+id/btnContinuar"
             android:layout_width="150dp"
@@ -108,6 +122,7 @@
             android:layout_marginStart="10dp"
             android:backgroundTint="@android:color/black"
             android:text="Continuar"
+            android:textColor="@android:color/white"
             android:textSize="12sp"
             android:drawableRight="@android:drawable/ic_media_next"
             android:drawableTint="@android:color/white" />

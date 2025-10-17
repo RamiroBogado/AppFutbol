@@ -97,8 +97,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="start">
+                    android:orientation="vertical">
 
                     <!-- Estadio -->
                     <LinearLayout
@@ -324,8 +323,6 @@
 
             </LinearLayout>
 
-
-
         </LinearLayout>
 
     </ScrollView>
@@ -343,7 +340,6 @@
         android:drawableTint="@android:color/white"
         android:text="Volver"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
-        tools:ignore="RtlHardcoded" />
+        android:textSize="20sp" />
 
 </LinearLayout>

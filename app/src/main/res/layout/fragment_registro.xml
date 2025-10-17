@@ -29,98 +29,112 @@
         android:textColor="@color/white"
         android:textSize="22sp" />
 
-    <!-- Grupo Usuario -->
+    <!-- Contenedor de campos -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#183426"
+        android:padding="24dp"
+        android:elevation="4dp"
+        android:layout_margin="16dp"
+        android:gravity="center_horizontal"
+        android:clipToPadding="false">
 
-        <TextView
-            android:id="@+id/tvUsuario"
+        <!-- Usuario -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingrese usuario:"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etUsuario"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@android:drawable/editbox_background_normal"
-            android:backgroundTint="@color/cardview_dark_background"
-            android:hint="Usuario"
-            android:inputType="text"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingrese usuario:"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-    <!-- Grupo Contraseña -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical">
+            <EditText
+                android:id="@+id/etUsuario"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:hint="Usuario"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvContra"
+        <!-- Contraseña -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingrese contraseña:"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etContra"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@android:drawable/editbox_background_normal"
-            android:backgroundTint="@color/cardview_dark_background"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvContra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingrese contraseña:"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-    <!-- Grupo Repetir Contraseña -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:orientation="vertical">
+            <EditText
+                android:id="@+id/etContra"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvRepetirContra"
+        <!-- Repetir Contraseña -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repetir contraseña:"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etRepetirContra"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@android:drawable/editbox_background_normal"
-            android:backgroundTint="@color/cardview_dark_background"
-            android:hint="Repetir contraseña"
-            android:inputType="textPassword"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray" />
+            <TextView
+                android:id="@+id/tvRepetirContra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repetir contraseña:"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etRepetirContra"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@android:drawable/editbox_background_normal"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:hint="Repetir contraseña"
+                android:inputType="textPassword"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray" />
+        </LinearLayout>
+
     </LinearLayout>
 
-    <!-- Contenedor para botones -->
+    <!-- Botones -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="8dp">
 
-        <!-- Botón Volver -->
         <Button
             android:id="@+id/btnVolver"
             android:layout_width="150dp"
@@ -129,12 +143,10 @@
             android:backgroundTint="@android:color/black"
             android:text="Volver"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:drawableLeft="@android:drawable/ic_media_previous"
             android:drawableTint="@android:color/white" />
 
-
-        <!-- Botón Continuar -->
         <Button
             android:id="@+id/btnContinuar"
             android:layout_width="150dp"
@@ -143,7 +155,7 @@
             android:backgroundTint="@android:color/black"
             android:text="Continuar"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:drawableRight="@android:drawable/ic_media_next"
             android:drawableTint="@android:color/white" />
     </LinearLayout>

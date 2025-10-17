@@ -10,144 +10,180 @@
     <!-- Toolbar en la parte superior -->
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar"
-        android:fitsSystemWindows="true" />
+        layout="@layout/layout_toolbar"/>
 
+    <!-- Título de Ligas -->
+    <TextView
+        android:id="@+id/tvTituloLigas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LIGAS"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="55dp" />
 
-    <!-- Contenedor para el contenido centrado -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
         android:padding="16dp">
 
-        <!-- Título -->
-        <TextView
-            android:id="@+id/tvTitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="LIGAS"
-            android:textColor="@color/white"
-            android:textSize="50sp"
-            android:textStyle="bold" />
-
-        <!-- Primera fila de botones cuadrados -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-            <!-- Primer botón cuadrado con logo -->
-            <LinearLayout
-                android:id="@+id/btnLogo1"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="12dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@drawable/button_square_background"
-                android:clickable="true"
-                android:focusable="true">
+            <!-- Grid de 6 ligas -->
+            <GridLayout
+                android:id="@+id/gridLigas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="3"
+                android:alignmentMode="alignMargins"
+                android:rowOrderPreserved="false"
+                android:useDefaultMargins="true"
+                android:layout_marginBottom="32dp">
 
-                <ImageView
-                    android:id="@+id/ivLogo1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Logo Premier League"
-                    android:src="@mipmap/pl" />
-            </LinearLayout>
+                <!-- Botón Liga 1 -->
+                <LinearLayout
+                    android:id="@+id/btnLogo1"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_square_background"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/ivLogo1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Logo Premier League"
+                        android:src="@mipmap/pl" />
+                </LinearLayout>
 
-            <!-- Segundo botón cuadrado con logo -->
-            <LinearLayout
-                android:id="@+id/btnLogo2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="12dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@drawable/button_square_background"
-                android:clickable="true"
-                android:focusable="true">
+                <!-- Botón Liga 2 -->
+                <LinearLayout
+                    android:id="@+id/btnLogo2"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_square_background"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/ivLogo2"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Logo Bundesliga"
+                        android:src="@mipmap/bl1" />
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/ivLogo2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Logo Bundesliga"
-                    android:src="@mipmap/bl1" />
-            </LinearLayout>
+                <!-- Botón Liga 3 -->
+                <LinearLayout
+                    android:id="@+id/btnLogo3"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_square_background"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/ivLogo3"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Logo Serie A"
+                        android:src="@mipmap/sa" />
+                </LinearLayout>
+
+                <!-- Botón Liga 4 -->
+                <LinearLayout
+                    android:id="@+id/btnLogo4"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_square_background"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/ivLogo4"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Logo La Liga"
+                        android:src="@mipmap/pd" />
+                </LinearLayout>
+
+                <!-- Botón Liga 5 -->
+                <LinearLayout
+                    android:id="@+id/btnLogo5"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_square_background"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/ivLogo5"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Logo Ligue 1"
+                        android:src="@mipmap/ppl" />
+                </LinearLayout>
+
+                <!-- Botón Liga 6 -->
+                <LinearLayout
+                    android:id="@+id/btnLogo6"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_square_background"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/ivLogo6"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Logo Eredivisie"
+                        android:src="@mipmap/fl1" />
+                </LinearLayout>
+            </GridLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-        <!-- Segunda fila de botones cuadrados -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="16dp">
-
-            <!-- Tercer botón cuadrado con logo -->
-            <LinearLayout
-                android:id="@+id/btnLogo3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="12dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@drawable/button_square_background"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:id="@+id/ivLogo3"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Logo Serie A"
-                    android:src="@mipmap/sa" />
-            </LinearLayout>
-
-            <!-- Cuarto botón cuadrado con logo -->
-            <LinearLayout
-                android:id="@+id/btnLogo4"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_margin="12dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@drawable/button_square_background"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:id="@+id/ivLogo4"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Logo La Liga"
-                    android:src="@mipmap/pd" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Botón Volver con icono -->
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@android:color/black"
-            android:text="Volver"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:drawableLeft="@android:drawable/ic_media_previous"
-            android:drawableTint="@android:color/white" />
-    </LinearLayout>
+    <!-- Botón Volver centrado -->
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/black"
+        android:text="Volver"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:drawableLeft="@android:drawable/ic_media_previous"
+        android:drawableTint="@android:color/white"/>
 
 </LinearLayout>

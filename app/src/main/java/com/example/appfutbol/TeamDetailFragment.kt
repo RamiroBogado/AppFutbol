@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -192,12 +193,17 @@ class TeamDetailFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.item_logout -> {
-                        requireActivity().finish()
+                        requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, BienvenidaFragment())
+                            .disallowAddToBackStack()
+                            .commit()
                         true
                     }
                     R.id.item_listado_ligas -> {
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, LigasFragment())
+                            .disallowAddToBackStack()
                             .commit()
                         true
                     }

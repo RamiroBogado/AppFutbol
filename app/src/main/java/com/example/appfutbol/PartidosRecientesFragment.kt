@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import adapters.PartidoAdapter
+import androidx.fragment.app.FragmentManager
 import viewmodels.PartidosViewModel
 import kotlinx.coroutines.launch
 
@@ -118,19 +119,24 @@ class PartidosRecientesFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.item_logout -> {
-                        requireActivity().finish()
+                        requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, BienvenidaFragment())
+                            .disallowAddToBackStack()
+                            .commit()
                         true
                     }
                     R.id.item_listado_ligas -> {
                         // Navegar a LigasFragment
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, LigasFragment())
+                            .disallowAddToBackStack()
                             .commit()
                         true
                     }
                     R.id.item_listado_lista -> {
                         // Navegar de vuelta a ListaFragment
-                        requireActivity().supportFragmentManager.popBackStack()
+                        parentFragmentManager.popBackStack()
                         true
                     }
                     else -> false

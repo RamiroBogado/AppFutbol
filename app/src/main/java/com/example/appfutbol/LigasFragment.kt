@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 
 class LigasFragment : Fragment() {
@@ -15,6 +16,9 @@ class LigasFragment : Fragment() {
     private lateinit var btnLogo2: LinearLayout
     private lateinit var btnLogo3: LinearLayout
     private lateinit var btnLogo4: LinearLayout
+    private lateinit var btnLogo5: LinearLayout
+    private lateinit var btnLogo6: LinearLayout
+
     private lateinit var btnVolver: Button
 
     override fun onCreateView(
@@ -39,6 +43,9 @@ class LigasFragment : Fragment() {
         btnLogo2 = view.findViewById(R.id.btnLogo2)
         btnLogo3 = view.findViewById(R.id.btnLogo3)
         btnLogo4 = view.findViewById(R.id.btnLogo4)
+        btnLogo5 = view.findViewById(R.id.btnLogo5)
+        btnLogo6 = view.findViewById(R.id.btnLogo6)
+
         btnVolver = view.findViewById(R.id.btnVolver)
     }
 
@@ -64,6 +71,14 @@ class LigasFragment : Fragment() {
 
         btnLogo4.setOnClickListener {
             navigateToListaFragment("PD", "La Liga")
+        }
+
+        btnLogo5.setOnClickListener {
+            navigateToListaFragment("PPL", "Primeira Liga")
+        }
+
+        btnLogo6.setOnClickListener {
+            navigateToListaFragment("FL1", "Ligue 1")
         }
 
         btnVolver.setOnClickListener {
@@ -104,12 +119,14 @@ class LigasFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.item_logout -> {
-                        requireActivity().finish()
+                        requireActivity().supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, BienvenidaFragment())
+                            .disallowAddToBackStack()
+                            .commit()
                         true
                     }
-                    R.id.item_listado_ligas -> {
-                        true
-                    }
+
                     else -> false
                 }
             }

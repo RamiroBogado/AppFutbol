@@ -8,7 +8,6 @@
     android:background="@drawable/item_background"
     android:elevation="4dp">
 
-    <!-- Fecha y Hora centradas -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
             android:textStyle="bold"
             android:textColor="#666666"
             android:text="2025/09/31"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp" />
 
         <TextView
             android:id="@+id/tv_hora"
@@ -33,10 +32,9 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#666666"
-            android:text="15h00"/>
+            android:text="15h00" />
     </LinearLayout>
 
-    <!-- Equipos perfectamente centrados -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +42,6 @@
         android:gravity="center"
         android:layout_marginBottom="8dp">
 
-        <!-- Equipo Local -->
         <TextView
             android:id="@+id/tv_equipo_local"
             android:layout_width="0dp"
@@ -57,9 +54,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="center"
-            android:paddingEnd="8dp"/>
+            android:paddingEnd="8dp" />
 
-        <!-- VS centrado -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,9 +63,8 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#999999"
-            android:paddingHorizontal="4dp"/>
+            android:paddingHorizontal="4dp" />
 
-        <!-- Equipo Visitante -->
         <TextView
             android:id="@+id/tv_equipo_visitante"
             android:layout_width="0dp"
@@ -82,10 +77,9 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="center"
-            android:paddingStart="8dp"/>
+            android:paddingStart="8dp" />
     </LinearLayout>
 
-    <!-- Resultado centrado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,9 +94,8 @@
             android:textStyle="bold"
             android:textColor="#E53935"
             android:text="0 - 3"
-            android:background="#FFEBEE"
             android:paddingHorizontal="20dp"
             android:paddingVertical="8dp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 </LinearLayout>

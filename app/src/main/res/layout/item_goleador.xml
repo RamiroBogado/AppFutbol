@@ -14,10 +14,11 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:text="1"
-        android:textSize="16sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:background="@drawable/circle_background"
-        android:textColor="@android:color/white" />
+        android:background="@mipmap/pelota"
+        android:textColor="@color/red"/>
+
 
     <!-- Información del jugador -->
     <LinearLayout
@@ -34,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Jugador"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             android:ellipsize="end"
@@ -46,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="Equipo"
             android:textSize="14sp"
-            android:textColor="#666666"
+            android:textColor="@color/gray"
             android:ellipsize="end"
             android:maxLines="1" />
 
@@ -76,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="8 asistencias"
             android:textSize="12sp"
-            android:textColor="#666666" />
+            android:textColor="@color/gray"/>
 
     </LinearLayout>
 

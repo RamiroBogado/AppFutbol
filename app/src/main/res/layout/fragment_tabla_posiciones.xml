@@ -13,24 +13,25 @@
         android:id="@+id/toolbar"
         layout="@layout/layout_toolbar" />
 
-    <!-- Contenedor para el contenido centrado -->
+    <!-- Contenedor principal -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="16dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:gravity="center_horizontal">
 
         <!-- Título -->
         <TextView
             android:id="@+id/tvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginVertical="12dp"
             android:text="Tabla de Posiciones"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <!-- ProgressBar -->
@@ -41,24 +42,25 @@
             android:layout_gravity="center"
             android:visibility="gone" />
 
-        <!-- Header de estadísticas - PERFECTAMENTE ALINEADO -->
+        <!-- Encabezado -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:orientation="horizontal"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:background="#F5F5F5"
-            android:layout_marginBottom="4dp">
+            android:background="#EEEEEE"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="8dp"
+            android:layout_marginBottom="2dp">
 
             <!-- Posición -->
             <TextView
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
                 android:text="POS"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:gravity="center" />
+                android:textColor="@color/black" />
 
             <!-- Equipo -->
             <TextView
@@ -66,12 +68,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="EQUIPO"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:gravity="start"
-                android:paddingStart="8dp" />
+                android:textColor="@color/black"
+                android:paddingStart="8dp"
+                android:gravity="start" />
 
-            <!-- Estadísticas con pesos iguales para perfecta alineación -->
+            <!-- Estadísticas -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -82,58 +85,61 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="PJ"
-                    android:textSize="11sp"
-                    android:gravity="center"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="G"
-                    android:textSize="11sp"
-                    android:gravity="center"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="E"
-                    android:textSize="11sp"
-                    android:gravity="center"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="P"
-                    android:textSize="11sp"
-                    android:gravity="center"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PU"
-                    android:textSize="11sp"
                     android:gravity="center"
-                    android:textStyle="bold" />
-
+                    android:text="PU"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#E53935" />
             </LinearLayout>
-
         </LinearLayout>
 
-        <!-- RecyclerView para tabla de posiciones -->
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTablaPosiciones"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="8dp"
+            android:paddingVertical="4dp"
             tools:listitem="@layout/item_tabla_posicion" />
 
         <!-- Botón Volver -->
@@ -141,14 +147,13 @@
             android:id="@+id/btnVolver"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginVertical="16dp"
             android:backgroundTint="@android:color/black"
             android:text="Volver"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:drawableLeft="@android:drawable/ic_media_previous"
-            android:drawableTint="@android:color/white"/>
+            android:drawableTint="@android:color/white" />
 
     </LinearLayout>
 

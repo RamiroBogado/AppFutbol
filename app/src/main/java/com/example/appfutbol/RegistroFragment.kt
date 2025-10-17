@@ -12,7 +12,6 @@ import dataBase.Usuario
 import dataBase.UsuarioDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -43,7 +42,9 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
         }
 
         btnVolver.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, BienvenidaFragment())
+                .commit()
         }
     }
 
@@ -97,6 +98,7 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
 
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, LoginFragment())
+                        .disallowAddToBackStack()
                         .commit()
                 }
             }

@@ -1,5 +1,6 @@
 package viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dtos.FullTimeScore
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class PartidosViewModel : ViewModel() {
@@ -23,6 +25,7 @@ class PartidosViewModel : ViewModel() {
             _partidosState.value = PartidosState.Loading
             try {
                 val response = repository.obtenerPartidosRecientes(competition)
+                Log.d("lista_DEBUG", "$response")
                 _partidosState.value = PartidosState.Success(response.matches)
             } catch (e: Exception) {
                 _partidosState.value = PartidosState.Error(e.message ?: "Error desconocido")
@@ -53,7 +56,9 @@ class PartidosViewModel : ViewModel() {
                 equipoVisitante = match.awayTeam.name,
                 resultado = formatearResultado(match.score.fullTime)
             )
+
         }.toMutableList()
+
     }
 
     private fun formatearFecha(utcDate: String): String {
@@ -74,11 +79,16 @@ class PartidosViewModel : ViewModel() {
             val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
             val date = inputFormat.parse(utcDate)
 
-            date?.let { outputFormat.format(it) } ?: "Hora no disponible"
+            date?.let {
+                // Restar 3 horas en milisegundos
+                val nuevaHora = Date(it.time - 3 * 60 * 60 * 1000)
+                outputFormat.format(nuevaHora)
+            } ?: "Hora no disponible"
         } catch (_: Exception) {
             "Hora no disponible"
         }
     }
+
 
     private fun formatearResultado(fullTime: FullTimeScore?): String {
         return if (fullTime?.home != null && fullTime.away != null) {

@@ -22,7 +22,6 @@ import dataBase.AppDatabase
 import dataBase.UsuarioDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -86,7 +85,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         btnVolver.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, BienvenidaFragment())
+                .commit()
         }
     }
 
@@ -129,6 +130,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, ligasFragment)
+
                         .commit()
                 } else {
                     Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()

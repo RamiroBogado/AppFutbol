@@ -11,6 +11,7 @@ class BienvenidaFragment : Fragment(R.layout.fragment_bienvenida) {
     private lateinit var btnRegistro: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
 
         btnIniciar = view.findViewById(R.id.btnIniciar)
@@ -19,14 +20,12 @@ class BienvenidaFragment : Fragment(R.layout.fragment_bienvenida) {
         btnIniciar.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, LoginFragment())
-                .addToBackStack(null)
                 .commit()
         }
 
         btnRegistro.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, RegistroFragment())
-                .addToBackStack(null)
                 .commit()
         }
     }
