@@ -40,7 +40,6 @@
         android:layout_marginTop="16dp"
         android:paddingHorizontal="16dp">
 
-
         <!-- Botón Registrar -->
         <Button
             android:id="@+id/btnRegistro"
@@ -54,7 +53,6 @@
             android:layout_marginEnd="8dp"
             android:drawableLeft="@android:drawable/ic_media_previous"
             android:drawableTint="@android:color/white" />
-
 
         <!-- Botón Iniciar Sesión -->
         <Button
@@ -71,6 +69,17 @@
             android:drawableTint="@android:color/white" />
     </LinearLayout>
 
+    <!-- Botón Ingresar como Invitado -->
+    <Button
+        android:id="@+id/btnInvitado"
+        android:text="Ingresar como invitado"
+        android:textSize="12sp"
+        android:backgroundTint="@android:color/black"
+        android:textColor="@android:color/white"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableRight="@android:drawable/ic_media_ff"
+        android:drawableTint="@android:color/white" />
 
 </LinearLayout>
-
